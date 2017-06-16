@@ -1,0 +1,23 @@
+Package: VETravelDemand
+Type: Package
+Title: Simulate Travel Demand for Households
+Version: 0.1.0
+Author: Liming Wang <lmwang@gmail.com>["aut", "cre"]
+Maintainer: Liming Wang <lmwang@gmail.com>
+Copyright: Portland State University
+URL: https://github.com/cities-lab/RSPM_ModeChoice
+Description: This package contains modules that work in the VisionEval framework to simulate 
+     multi-modal travel demand for households.
+License: Apache 2
+LazyData: TRUE
+Depends: R (>= 3.1.0)
+Imports:
+    tidyverse,
+    visioneval,
+    devtools,
+    pscl
+Suggests:
+    knitr
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
+Remotes: cities-lab/VisionEval/sources/framework/visioneval@develop

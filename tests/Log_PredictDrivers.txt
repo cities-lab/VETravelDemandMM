@@ -1,0 +1,328 @@
+Test
+Test of VESimHouseholds package modules
+2017-06-15_17:20:31
+
+2017-06-15 17:20:31 : Testing PredictDrivers. 
+
+2017-06-15 17:20:31 : Attempting to load datastore. 
+
+2017-06-15 17:20:34 : Datastore loaded. 
+
+2017-06-15 17:20:34 : Attempting to load and check specifications. 
+
+Test
+Test of VESimHouseholds package modules
+2017-06-15_17:43:29
+
+2017-06-15 17:43:29 : Testing PredictDrivers. 
+
+2017-06-15 17:43:29 : Attempting to load datastore. 
+
+2017-06-15 17:43:32 : Datastore loaded. 
+
+2017-06-15 17:43:32 : Attempting to load and check specifications. 
+
+2017-06-15 17:43:33 : Module specifications successfully loaded and checked. 
+
+2017-06-15 17:43:33 : No inputs to process. 
+
+2017-06-15 17:43:33 : Checking whether datastore contains all datasets in Get specifications. 
+
+2017-06-15 17:43:33 : The following datasets identified in the Get specifications for module PredictDrivers are missing from the datastore.
+2010/Household/NumWkr
+2038/Household/NumWkr 
+
+Test
+Test of VESimHouseholds package modules
+2017-06-15_17:44:41
+
+2017-06-15 17:44:41 : Testing PredictDrivers. 
+
+2017-06-15 17:44:41 : Attempting to load datastore. 
+
+2017-06-15 17:44:43 : Datastore loaded. 
+
+2017-06-15 17:44:43 : Attempting to load and check specifications. 
+
+2017-06-15 17:44:43 : Module specifications successfully loaded and checked. 
+
+2017-06-15 17:44:43 : No inputs to process. 
+
+2017-06-15 17:44:43 : Checking whether datastore contains all datasets in Get specifications. 
+
+2017-06-15 17:44:44 : The following datasets identified in the Get specifications for module PredictDrivers are missing from the datastore.
+2010/Household/NumWkr
+2038/Household/NumWkr 
+
+Test
+Test of VESimHouseholds package modules
+2017-06-15_17:49:13
+
+2017-06-15 17:49:13 : Testing PredictDrivers. 
+
+2017-06-15 17:49:13 : Attempting to load datastore. 
+
+2017-06-15 17:49:16 : Datastore loaded. 
+
+2017-06-15 17:49:16 : Attempting to load and check specifications. 
+
+2017-06-15 17:49:16 : Module specifications successfully loaded and checked. 
+
+2017-06-15 17:49:16 : No inputs to process. 
+
+2017-06-15 17:49:16 : Checking whether datastore contains all datasets in Get specifications. 
+
+2017-06-15 17:49:16 : Datastore contains all datasets identified in module Get specifications. 
+
+2017-06-15 17:49:16 : Read data 2010/Household/Age0to14 
+
+2017-06-15 17:49:16 : Read data 2010/Household/HhSize 
+
+2017-06-15 17:49:16 : Read data 2010/Household/Workers 
+
+2017-06-15 17:49:16 : Read data 2010/Household/Income 
+
+2017-06-15 17:49:16 : Read data 2010/Azone/Azone 
+
+Test
+Test of VESimHouseholds package modules
+2017-06-15_17:51:34
+
+2017-06-15 17:51:34 : Testing PredictDrivers. 
+
+2017-06-15 17:51:34 : Attempting to load datastore. 
+
+2017-06-15 17:51:37 : Datastore loaded. 
+
+2017-06-15 17:51:37 : Attempting to load and check specifications. 
+
+2017-06-15 17:51:37 : Module specifications successfully loaded and checked. 
+
+2017-06-15 17:51:37 : No inputs to process. 
+
+2017-06-15 17:51:37 : Checking whether datastore contains all datasets in Get specifications. 
+
+2017-06-15 17:51:37 : Datastore contains all datasets identified in module Get specifications. 
+
+2017-06-15 17:51:37 : Read data 2010/Household/Age0to14 
+
+2017-06-15 17:51:37 : Read data 2010/Household/HhSize 
+
+2017-06-15 17:51:38 : Read data 2010/Household/Workers 
+
+2017-06-15 17:51:38 : Read data 2010/Household/Income 
+
+2017-06-15 17:51:38 : Read data 2010/Azone/Azone 
+
+Test
+Test of VESimHouseholds package modules
+2017-06-15_17:53:17
+
+2017-06-15 17:53:17 : Testing PredictDrivers. 
+
+2017-06-15 17:53:17 : Attempting to load datastore. 
+
+2017-06-15 17:53:20 : Datastore loaded. 
+
+2017-06-15 17:53:20 : Attempting to load and check specifications. 
+
+2017-06-15 17:53:20 : Module specifications successfully loaded and checked. 
+
+2017-06-15 17:53:20 : No inputs to process. 
+
+2017-06-15 17:53:20 : Checking whether datastore contains all datasets in Get specifications. 
+
+2017-06-15 17:53:20 : Datastore contains all datasets identified in module Get specifications. 
+
+2017-06-15 17:53:20 : Read data 2010/Household/Age0to14 
+
+2017-06-15 17:53:20 : Read data 2010/Household/HhSize 
+
+2017-06-15 17:53:20 : Read data 2010/Household/Workers 
+
+2017-06-15 17:53:22 : Read data 2010/Household/Income 
+
+2017-06-15 17:53:22 : Read data 2010/Azone/Azone 
+
+Test
+Test of VESimHouseholds package modules
+2017-06-15_18:00:34
+
+2017-06-15 18:00:34 : Testing PredictDrivers. 
+
+2017-06-15 18:00:34 : Attempting to load datastore. 
+
+2017-06-15 18:00:37 : Datastore loaded. 
+
+2017-06-15 18:00:37 : Attempting to load and check specifications. 
+
+2017-06-15 18:00:37 : Module specifications successfully loaded and checked. 
+
+2017-06-15 18:00:37 : No inputs to process. 
+
+2017-06-15 18:00:37 : Checking whether datastore contains all datasets in Get specifications. 
+
+2017-06-15 18:00:37 : Datastore contains all datasets identified in module Get specifications. 
+
+2017-06-15 18:00:37 : Read data 2010/Household/Age0to14 
+
+2017-06-15 18:00:37 : Read data 2010/Household/HhSize 
+
+2017-06-15 18:00:37 : Read data 2010/Household/Workers 
+
+2017-06-15 18:00:37 : Read data 2010/Household/Income 
+
+2017-06-15 18:00:37 : Read data 2010/Azone/Azone 
+
+Test
+Test of VESimHouseholds package modules
+2017-06-15_18:00:51
+
+2017-06-15 18:00:51 : Testing PredictDrivers. 
+
+2017-06-15 18:00:51 : Attempting to load datastore. 
+
+2017-06-15 18:00:54 : Datastore loaded. 
+
+2017-06-15 18:00:54 : Attempting to load and check specifications. 
+
+2017-06-15 18:00:54 : Module specifications successfully loaded and checked. 
+
+2017-06-15 18:00:54 : No inputs to process. 
+
+2017-06-15 18:00:54 : Checking whether datastore contains all datasets in Get specifications. 
+
+2017-06-15 18:00:54 : Datastore contains all datasets identified in module Get specifications. 
+
+2017-06-15 18:00:54 : Read data 2010/Household/Age0to14 
+
+2017-06-15 18:00:54 : Read data 2010/Household/HhSize 
+
+2017-06-15 18:00:54 : Read data 2010/Household/Workers 
+
+2017-06-15 18:00:54 : Read data 2010/Household/Income 
+
+2017-06-15 18:00:54 : Read data 2010/Azone/Azone 
+
+Test
+Test of VESimHouseholds package modules
+2017-06-15_18:15:33
+
+2017-06-15 18:15:33 : Testing PredictDrivers. 
+
+2017-06-15 18:15:33 : Attempting to load datastore. 
+
+2017-06-15 18:15:35 : Datastore loaded. 
+
+2017-06-15 18:15:35 : Attempting to load and check specifications. 
+
+2017-06-15 18:15:35 : Module specifications successfully loaded and checked. 
+
+2017-06-15 18:15:35 : No inputs to process. 
+
+2017-06-15 18:15:35 : Checking whether datastore contains all datasets in Get specifications. 
+
+2017-06-15 18:15:35 : Datastore contains all datasets identified in module Get specifications. 
+
+2017-06-15 18:15:35 : Read data 2010/Household/Age0to14 
+
+2017-06-15 18:15:35 : Read data 2010/Household/HhSize 
+
+2017-06-15 18:15:35 : Read data 2010/Household/Workers 
+
+2017-06-15 18:15:35 : Read data 2010/Household/Income 
+
+2017-06-15 18:15:35 : Read data 2010/Azone/Azone 
+
+Test
+Test of VESimHouseholds package modules
+2017-06-15_18:18:21
+
+2017-06-15 18:18:21 : Testing PredictDrivers. 
+
+2017-06-15 18:18:21 : Attempting to load datastore. 
+
+2017-06-15 18:18:23 : Datastore loaded. 
+
+2017-06-15 18:18:23 : Attempting to load and check specifications. 
+
+2017-06-15 18:18:24 : Module specifications successfully loaded and checked. 
+
+2017-06-15 18:18:24 : No inputs to process. 
+
+2017-06-15 18:18:24 : Checking whether datastore contains all datasets in Get specifications. 
+
+2017-06-15 18:18:24 : Datastore contains all datasets identified in module Get specifications. 
+
+2017-06-15 18:18:24 : Read data 2010/Household/Age0to14 
+
+2017-06-15 18:18:24 : Read data 2010/Household/HhSize 
+
+2017-06-15 18:18:24 : Read data 2010/Household/Workers 
+
+2017-06-15 18:18:24 : Read data 2010/Household/Income 
+
+2017-06-15 18:18:24 : Read data 2010/Azone/Azone 
+
+Test
+Test of VESimHouseholds package modules
+2017-06-15_21:16:01
+
+2017-06-15 21:16:01 : Testing PredictDrivers. 
+
+2017-06-15 21:16:01 : Attempting to load datastore. 
+
+2017-06-15 21:16:04 : Datastore loaded. 
+
+2017-06-15 21:16:04 : Attempting to load and check specifications. 
+
+2017-06-15 21:16:04 : Module specifications successfully loaded and checked. 
+
+2017-06-15 21:16:04 : No inputs to process. 
+
+2017-06-15 21:16:04 : Checking whether datastore contains all datasets in Get specifications. 
+
+2017-06-15 21:16:04 : Datastore contains all datasets identified in module Get specifications. 
+
+2017-06-15 21:16:04 : Running module and checking whether outputs meet Set specifications. 
+
+2017-06-15 21:16:04 : Also saving module outputs to datastore. 
+
+2017-06-15 21:16:04 : Read data 2010/Household/Age0to14 
+
+2017-06-15 21:16:04 : Read data 2010/Household/HhSize 
+
+2017-06-15 21:16:04 : Read data 2010/Household/Workers 
+
+2017-06-15 21:16:04 : Read data 2010/Household/Income 
+
+2017-06-15 21:16:04 : Read data 2010/Household/Vehicles 
+
+2017-06-15 21:16:04 : Read data 2010/Household/LifeCycle 
+
+2017-06-15 21:16:04 : Read data 2010/Household/HhId 
+
+2017-06-15 21:16:04 : Read data 2010/Azone/Azone 
+
+2017-06-15 21:16:12 : Read data 2038/Household/Age0to14 
+
+2017-06-15 21:16:12 : Read data 2038/Household/HhSize 
+
+2017-06-15 21:16:12 : Read data 2038/Household/Workers 
+
+2017-06-15 21:16:12 : Read data 2038/Household/Income 
+
+2017-06-15 21:16:12 : Read data 2038/Household/Vehicles 
+
+2017-06-15 21:16:12 : Read data 2038/Household/LifeCycle 
+
+2017-06-15 21:16:12 : Read data 2038/Household/HhId 
+
+2017-06-15 21:16:12 : Read data 2038/Azone/Azone 
+
+2017-06-15 21:16:21 : Module run successfully and outputs meet Set specifications. 
+
+2017-06-15 21:16:21 : Module outputs saved to datastore. 
+
+2017-06-15 21:16:21 : Congratulations. Module PredictDrivers passed all tests. 
+

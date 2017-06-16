@@ -1,0 +1,116 @@
+Test
+Test of VESimHouseholds package modules
+2017-06-15_21:09:19
+
+2017-06-15 21:09:19 : Testing PredictVehicles. 
+
+2017-06-15 21:09:19 : Attempting to load datastore. 
+
+2017-06-15 21:09:21 : Datastore loaded. 
+
+2017-06-15 21:09:21 : Attempting to load and check specifications. 
+
+2017-06-15 21:09:21 : Module specifications successfully loaded and checked. 
+
+2017-06-15 21:09:21 : No inputs to process. 
+
+2017-06-15 21:09:21 : Checking whether datastore contains all datasets in Get specifications. 
+
+2017-06-15 21:09:21 : Datastore contains all datasets identified in module Get specifications. 
+
+2017-06-15 21:09:21 : Running module and checking whether outputs meet Set specifications. 
+
+2017-06-15 21:09:21 : Also saving module outputs to datastore. 
+
+2017-06-15 21:09:21 : Read data 2010/Household/Age0to14 
+
+2017-06-15 21:09:21 : Read data 2010/Household/HhSize 
+
+2017-06-15 21:09:21 : Read data 2010/Household/Workers 
+
+2017-06-15 21:09:21 : Read data 2010/Household/Income 
+
+2017-06-15 21:09:21 : Read data 2010/Household/LifeCycle 
+
+2017-06-15 21:09:21 : Read data 2010/Household/HhId 
+
+2017-06-15 21:09:21 : Read data 2010/Azone/Azone 
+
+2017-06-15 21:09:29 : Read data 2038/Household/Age0to14 
+
+2017-06-15 21:09:29 : Read data 2038/Household/HhSize 
+
+2017-06-15 21:09:29 : Read data 2038/Household/Workers 
+
+2017-06-15 21:09:29 : Read data 2038/Household/Income 
+
+2017-06-15 21:09:29 : Read data 2038/Household/LifeCycle 
+
+2017-06-15 21:09:29 : Read data 2038/Household/HhId 
+
+2017-06-15 21:09:29 : Read data 2038/Azone/Azone 
+
+2017-06-15 21:09:39 : Module run successfully and outputs meet Set specifications. 
+
+2017-06-15 21:09:39 : Module outputs saved to datastore. 
+
+2017-06-15 21:09:39 : Congratulations. Module PredictVehicles passed all tests. 
+
+Test
+Test of VESimHouseholds package modules
+2017-06-15_21:15:42
+
+2017-06-15 21:15:42 : Testing PredictVehicles. 
+
+2017-06-15 21:15:42 : Attempting to load datastore. 
+
+2017-06-15 21:15:45 : Datastore loaded. 
+
+2017-06-15 21:15:45 : Attempting to load and check specifications. 
+
+2017-06-15 21:15:45 : Module specifications successfully loaded and checked. 
+
+2017-06-15 21:15:45 : No inputs to process. 
+
+2017-06-15 21:15:45 : Checking whether datastore contains all datasets in Get specifications. 
+
+2017-06-15 21:15:45 : Datastore contains all datasets identified in module Get specifications. 
+
+2017-06-15 21:15:45 : Running module and checking whether outputs meet Set specifications. 
+
+2017-06-15 21:15:45 : Also saving module outputs to datastore. 
+
+2017-06-15 21:15:45 : Read data 2010/Household/Age0to14 
+
+2017-06-15 21:15:45 : Read data 2010/Household/HhSize 
+
+2017-06-15 21:15:46 : Read data 2010/Household/Workers 
+
+2017-06-15 21:15:46 : Read data 2010/Household/Income 
+
+2017-06-15 21:15:46 : Read data 2010/Household/LifeCycle 
+
+2017-06-15 21:15:46 : Read data 2010/Household/HhId 
+
+2017-06-15 21:15:46 : Read data 2010/Azone/Azone 
+
+2017-06-15 21:15:53 : Read data 2038/Household/Age0to14 
+
+2017-06-15 21:15:53 : Read data 2038/Household/HhSize 
+
+2017-06-15 21:15:53 : Read data 2038/Household/Workers 
+
+2017-06-15 21:15:53 : Read data 2038/Household/Income 
+
+2017-06-15 21:15:53 : Read data 2038/Household/LifeCycle 
+
+2017-06-15 21:15:53 : Read data 2038/Household/HhId 
+
+2017-06-15 21:15:53 : Read data 2038/Azone/Azone 
+
+2017-06-15 21:16:01 : Module run successfully and outputs meet Set specifications. 
+
+2017-06-15 21:16:01 : Module outputs saved to datastore. 
+
+2017-06-15 21:16:01 : Congratulations. Module PredictVehicles passed all tests. 
+
