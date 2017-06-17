@@ -13,8 +13,13 @@ LazyData: TRUE
 Depends: R (>= 3.1.0)
 Imports:
     tidyverse,
+    dplyr,
+    purrr,
+    tidyr,
     visioneval,
+    splines,
     devtools,
+    MASS,
     pscl
 Suggests:
     knitr

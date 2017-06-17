@@ -24,6 +24,7 @@
 #' identifies the size of the longest Azone name. The second element, "HhId",
 #' identifies the size of the longest HhId.
 #' @import tidyverse
+#' @importFrom splines ns
 #' @export
 #'
 do_predictions <- function(Model_df, Dataset_df,
@@ -38,7 +39,7 @@ do_predictions <- function(Model_df, Dataset_df,
     Dataset_lcdf <- Dataset_df %>%
       group_by_(SegmentCol_vc) %>%
       nest() %>%
-      left_join(Model_df)
+      left_join(Model_df, by=SegmentCol_vc)
   } else { # if there is no segmentation in model(s)
     Dataset_lcdf <- tibble(data=list(Dataset_df)) %>%
       crossing(Model_df)
@@ -66,28 +67,15 @@ do_predictions <- function(Model_df, Dataset_df,
     Preds_lcdf <- Preds_lcdf %>%
       arrange(step) %>%
       group_by_(SegmentCol_vc) %>%
-      summarize(y=combine_preds(y)) %>%
+      summarize(data=list(first(data)),
+                y=combine_preds(y)) %>%
       ungroup()
   }
 
-  Preds_df <- Preds_lcdf %>%
+  Preds_lcdf %>%
     mutate(id=map(data, id_name)) %>%
     unnest(id, y)
 
-  Out_ls <- list()
-  Out_ls[[id_name]] <- Preds_df[["id"]]
-  Out_ls[[y_name]] <- Preds_df[["y"]]
-
-  #Calculate LENGTH attribute for dataset table
-  Out_ls$LENGTH <- numeric(0)
-  Out_ls$LENGTH[dataset_name] <- length(Out_ls[[id_name]])
-  #Calculate SIZE attributes for 'Azone' and 'HhId'
-  Out_ls$SIZE <- numeric(0)
-  Out_ls$SIZE[id_name] <- max(nchar(Out_ls[[id_name]]))
-  Out_ls$SIZE[y_name] <- max(nchar(Out_ls[[y_name]]))
-
-  #Return the list
-  Out_ls
 }
 
 #' internal function that handles pass a list column of a data frame to another

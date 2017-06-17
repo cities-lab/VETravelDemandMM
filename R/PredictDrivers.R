@@ -64,7 +64,7 @@ PredictDriversSpecifications <- list(
       TABLE = "Household",
       GROUP = "Year",
       TYPE = "currency",
-      UNITS = "USD.1999",
+      UNITS = "USD.2009",
       NAVALUE = -1,
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = "",
@@ -169,6 +169,8 @@ rm(PredictDriversSpecifications)
 #' @return A list containing the components specified in the Set
 #' specifications for the module.
 #' @import visioneval
+#' @import tidyverse
+#' @import MASS
 #' @export
 PredictDrivers <- function(L) {
   dataset_name <- "Household"

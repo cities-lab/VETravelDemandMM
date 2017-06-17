@@ -158,6 +158,8 @@ rm(PredictVehiclesSpecifications)
 #' @return A list containing the components specified in the Set
 #' specifications for the module.
 #' @import visioneval
+#' @import tidyverse
+#' @import MASS
 #' @export
 PredictVehicles <- function(L) {
   dataset_name <- "Household"

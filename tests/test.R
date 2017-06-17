@@ -25,42 +25,42 @@ testModule(
   DoRun = TRUE
 )
 
-# #Test PredictAADVMT module
-# testModule(
-#   ModuleName = "VETravelDemand::PredictAADVMT",
-#   ProjectDir = TestDir,
-#   ParamDir = "defs",
-#   LoadDatastore = TRUE,
-#   SaveDatastore = TRUE,
-#   DoRun = TRUE
-# )
-#
-# #Test PredictBikeTFL module
-# testModule(
-#   ModuleName = "VETravelDemand::PredictBikeTFL",
-#   ProjectDir = TestDir,
-#   ParamDir = "defs",
-#   LoadDatastore = TRUE,
-#   SaveDatastore = TRUE,
-#   DoRun = TRUE
-# )
-#
-# #Test PredictWalkTFL module
-# testModule(
-#   ModuleName = "VETravelDemand::PredictWalkTFL",
-#   ProjectDir = TestDir,
-#   ParamDir = "defs",
-#   LoadDatastore = TRUE,
-#   SaveDatastore = TRUE,
-#   DoRun = TRUE
-# )
-#
-# #Test PredictTransitTFL module
-# testModule(
-#   ModuleName = "VETravelDemand::PredictTransitTFL",
-#   ProjectDir = TestDir,
-#   ParamDir = "defs",
-#   LoadDatastore = TRUE,
-#   SaveDatastore = TRUE,
-#   DoRun = TRUE
-# )
+#Test PredictAADVMT module
+testModule(
+  ModuleName = "VETravelDemand::PredictAADVMT",
+  ProjectDir = TestDir,
+  ParamDir = "defs",
+  LoadDatastore = TRUE,
+  SaveDatastore = TRUE,
+  DoRun = TRUE
+)
+
+#Test PredictBikePMT module
+testModule(
+  ModuleName = "VETravelDemand::PredictBikePMT",
+  ProjectDir = TestDir,
+  ParamDir = "defs",
+  LoadDatastore = TRUE,
+  SaveDatastore = TRUE,
+  DoRun = TRUE
+)
+
+#Test PredictWalkPMT module
+testModule(
+  ModuleName = "VETravelDemand::PredictWalkPMT",
+  ProjectDir = TestDir,
+  ParamDir = "defs",
+  LoadDatastore = TRUE,
+  SaveDatastore = TRUE,
+  DoRun = TRUE
+)
+
+#Test PredictTransitPMT module
+testModule(
+  ModuleName = "VETravelDemand::PredictTransitPMT",
+  ProjectDir = TestDir,
+  ParamDir = "defs",
+  LoadDatastore = TRUE,
+  SaveDatastore = TRUE,
+  DoRun = TRUE
+)
