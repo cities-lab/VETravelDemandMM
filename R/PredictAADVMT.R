@@ -327,7 +327,7 @@ devtools::use_data(PredictAADVMTSpecifications, overwrite = TRUE)
 #' identifies the size of the longest Azone name. The second element, "HhId",
 #' identifies the size of the longest HhId.
 #' @import visioneval dplyr purrr tidyr pscl
-#' @importFrom "splines" "ns"
+#' @importFrom splines ns
 #' @export
 PredictAADVMT <- function(L) {
   #TODO: get id_name from L or specification?

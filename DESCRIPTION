@@ -11,9 +11,9 @@ Description: This package contains a module for the VisionEval framework that si
 License: Apache 2
 LazyData: TRUE
 Depends: 
-    R (>= 3.4.0),
-    visioneval
+    R (>= 3.4.0)
 Imports:
+    visioneval,
     tidyverse,
     dplyr,
     purrr,
