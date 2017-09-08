@@ -14,3 +14,4 @@ install:
 script:
   - Rscript -e 'devtools::install_deps(".")'
   - Rscript -e 'devtools::check(".")'
+  - Rscript tests/scripts/test.R
