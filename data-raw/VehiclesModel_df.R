@@ -1,27 +1,19 @@
-library(tidyverse)
 library(MASS)
+library(tidyverse)
+library(splines)
+library(hydroGOF)
 
-source('../code/functions.R')
-source('../code/load_data.R')
-source('../code/comp_dependencies.R')
-source('../code/partition_data.R')
-source('../code/est_models.R')
-source('../code/rename_variables.R')
+source("data-raw/EstModels.R")
+if (!exists("Hh_df"))
+  source("data-raw/LoadDataforModelEst.R")
 
-hh_df_file <- "../output/intermediate/hh_df.rda"
-hh_df <- load_or_source(hh_df_file, "hh.df")
-
-hh_df <- compute_dependencies(hh_df)
-hh_df <- rename_variables(hh_df)
-
-hh_df <- hh_df %>%
+Hh_df <- Hh_df %>%
   mutate(
-    hhwgt=WTHHFIN * n()/sum(WTHHFIN),
     Drivers_f = as.factor(Drivers),
     Vehicles_f = as.factor(Vehicles)
   )
 
-mm_df <- tibble(train=list(hh_df),
+mm_df <- tibble(train=list(Hh_df),
                 test=train)
 
 Vehicles_fmlas <- tribble(
@@ -39,8 +31,8 @@ Vehicles_ologit <- mm_df %>%
          preds = map2(model, test, ~predict(.x, .y)),
          yhat = map2(preds, post_func, `.y(.x)`),
          y = map(test, "Vehicles"),
-         rmse = map2_dbl(yhat, y, calc_rmse),
-         nrmse = map2_dbl(yhat, y, calc_nrmse),
+         rmse = map2_dbl(yhat, y, rmse),
+         nrmse = map2_dbl(yhat, y, nrmse),
          AIC=map_dbl(model, AIC),
          BIC=map_dbl(model, BIC),
          # compute McFadden's R2

@@ -1,31 +1,16 @@
 library(tidyverse)
 library(splines)
-library(mhurdle)
+library(hydroGOF)
 
-source('../code/functions.R')
-source('../code/load_data.R')
-source('../code/comp_dependencies.R')
-source('../code/rename_variables.R')
-source('../code/partition_data.R')
-source('../code/est_models.R')
+source("data-raw/EstModels.R")
+if (!exists("Hh_df"))
+  source("data-raw/LoadDataforModelEst.R")
 
-hh_df_file <- "../output/intermediate/hh_df.rda"
-hh_df <- load_or_source(hh_df_file, "hh.df")
-
-hh_df <- compute_dependencies(hh_df)
-hh_df <- rename_variables(hh_df)
-
-hh_df <- hh_df %>%
-  mutate(
-    hhwgt=WTHHFIN * n()/sum(WTHHFIN),
-    td.miles.Bike_f = as.factor(round(td.miles.Bike, digits=1))
-  )
-
-mm_df <- hh_df %>%
-  segment_data("metro") %>%
-  name_list.cols(name_cols=c("metro")) %>%
-  mutate(train=map(train, as.data.frame),
-         test=map(test, as.data.frame))
+mm_df <- Hh_df %>%
+  filter(AADVMT<quantile(AADVMT, .99, na.rm=T)) %>%
+  nest(-metro) %>%
+  rename(train=data) %>%
+  mutate(test=train) # use the same data for train & test
 
 int_round <- function(x) as.integer(round(x))
 int_cround <- function(x) as.integer(ifelse(x<1, ceiling(x), round(x)))
@@ -42,8 +27,8 @@ est_model_with <- function(data, fmla_df)
          yhat = map2(preds, post_func, `.y(.x)`),
          y_name = map_chr(model, ~all.vars(terms(.))[1]),
          y = map2(test, y_name, ~.x[[.y]]),
-         rmse = map2_dbl(yhat, y, calc_rmse),
-         nrmse = map2_dbl(yhat, y, calc_nrmse),
+         rmse = map2_dbl(yhat, y, rmse),
+         nrmse = map2_dbl(yhat, y, nrmse),
          AIC=map_dbl(model, AIC),
          BIC=map_dbl(model, BIC)
          # compute McFadden's R2
@@ -73,19 +58,6 @@ BikePMT_fmlas <- tribble(
 m1cv <- est_model_with(mm_df, BikePMT_fmlas)
 m1cv$model %>% map(summary)
 m1cv %>% dplyr::select(name, metro, rmse, nrmse, preds, yhat, y)
-
-m1cv$model %>% map(vif) %>% map(sqrt)
-
-
-ybars <- ybar_by_dx(hh_df, x_col="D1B", model_df=m1cv,
-                    y_col="td.miles.Bike",
-                    x_args=seq(.1, 6, by=0.4), x_func = `*`,
-                    segment_col="metro",
-                    update_dependencies=FALSE,
-                    update_func=NULL,
-                    predict_type="response"
-                    #predict_type="class"
-)
 
 BikePMTModel_df <-  m1cv %>%
   dplyr::select(metro, model, post_func) %>%

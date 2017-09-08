@@ -1,82 +1,74 @@
 library(tidyverse)
 library(splines)
+library(hydroGOF)
 
-source('../code/functions.R')
-source('../code/load_data.R')
-source('../code/comp_dependencies.R')
-source('../code/partition_data.R')
-source('../code/est_models.R')
+source("data-raw/EstModels.R")
+if (!exists("Hh_df"))
+  source("data-raw/LoadDataforModelEst.R")
 
-hh_df_file <- "../output/intermediate/hh_df.rda"
-hh_df <- load_or_source(hh_df_file, "hh.df")
+mm_df <- Hh_df %>%
+  filter(AADVMT<quantile(AADVMT, .99, na.rm=T)) %>%
+  nest(-metro) %>%
+  rename(train=data) %>%
+  mutate(test=train) # use the same data for train & test
 
-hh_df <- compute_dependencies(hh_df)
-
-mm_df <- hh_df %>%
-  segment_data("metro") %>%
-  name_list.cols(name_cols=c("metro"))
-
-fmlas1 <- list(metro    =~pscl::hurdle(ntrips.Transit ~ AADVMT+HHSIZE+LIF_CYC+
-                                        Age0to14+D1D+Tranmilescap+D4c |
-                                        AADVMT+VehPerDriver+HHSIZE+WRKCOUNT+LIF_CYC+Age0to14+D1D+
-                                        Fwylnmicap+Tranmilescap:D4c,
-                                      data=., na.action=na.omit),
-              non_metro=~pscl::hurdle(ntrips.Transit ~  log1p(AADVMT)+log1p(VehPerDriver)+HHSIZE+LIF_CYC+
-                                        Age0to14+LogIncome+D1D |
-                                        log1p(AADVMT)+log1p(VehPerDriver)+WRKCOUNT+LIF_CYC+Age0to14+D1B+D3bmm4+
-                                        LogIncome,
-                                      data=., na.action=na.omit))
-
-
-
-inv_fun <- function(x) x
-
-TransitTFModel_df <- mm_df %>%
-  add_formulas(fmlas1) %>%
-  mutate(
-    model = map2(train, formula, est_model),
-    pseudo.r2 = map_dbl(model, calc_pseudo.r2),
-    preds = map2(model, test, predict, type="response"),
-    rmse = map2_dbl(preds, map(test, resample_get, col_name="ntrips.Transit"), calc_rmse)
-  ) %>%
-  dplyr::select(-c(test, train)) %>%
-  I()
-
-TransitTFModel_df$model %>% map(summary)
-TransitTFModel_df$post_func <- list(inv_fun)
-
-fmlas2 <- list(    metro   =~lm(log(atd.miles.Transit) ~ AADVMT + VehPerDriver + Age0to14 +
-                                  Age65Plus + LogIncome + LIF_CYC + D2A_JPHH +
-                                  D1B + D3bmm4 + D5cri + Tranmilescap + Tranmilescap:D4c,
-                                data=., subset=(atd.miles.Transit > 0), na.action=na.omit),
-                   non_metro=~lm(log(atd.miles.Transit) ~ AADVMT + Age0to14 +
-                                   Age65Plus + LogIncome + LIF_CYC + D2A_JPHH +
-                                   D1B + D5cri,
-                                 data=., subset=(atd.miles.Transit > 0), na.action=na.omit)
+BikeTFL_fmlas <- tribble(
+  ~metro,  ~step, ~post_func,      ~fmla,
+  "metro",    1,  function(y) y,   ~pscl::hurdle(ntrips.Transit ~ AADVMT+HHSIZE+LIF_CYC+
+                                                   Age0to14+D1D+Tranmilescap+D4c |
+                                                   AADVMT+VehPerDriver+HHSIZE+WRKCOUNT+LIF_CYC+Age0to14+D1D+
+                                                   Fwylnmicap+Tranmilescap:D4c,
+                                                 data=., weights=.$hhwgt, na.action=na.omit),
+  "metro",    2,  function(y) exp(y), ~lm(log(atd.miles.Transit) ~ AADVMT + VehPerDriver + Age0to14 +
+                                            Age65Plus + LogIncome + LIF_CYC + D2A_JPHH +
+                                            D1B + D3bmm4 + D5cri + Tranmilescap + Tranmilescap:D4c,
+                                          data=., subset=(atd.miles.Transit > 0), weights=.$hhwgt, na.action=na.omit),
+  "non_metro",1,  function(y) y,   ~pscl::hurdle(ntrips.Transit ~  log1p(AADVMT)+log1p(VehPerDriver)+HHSIZE+LIF_CYC+
+                                                   Age0to14+LogIncome+D1D |
+                                                   log1p(AADVMT)+log1p(VehPerDriver)+WRKCOUNT+LIF_CYC+Age0to14+D1B+D3bmm4+
+                                                   LogIncome,
+                                                 data=., weights=.$hhwgt, na.action=na.omit),
+  "non_metro",2,  function(y) exp(y),  ~lm(log(atd.miles.Transit) ~ AADVMT + Age0to14 +
+                                             Age65Plus + LogIncome + LIF_CYC + D2A_JPHH +
+                                             D1B + D5cri,
+                                           data=., subset=(atd.miles.Transit > 0), weights=.$hhwgt, na.action=na.omit)
 )
 
-inv_fun <- function(x) exp(x)
-
-TransitTLModel_df <- mm_df %>%
-  add_formulas(fmlas2) %>%
-  mutate(
-    model = map2(train, formula, est_model),
-    preds = map2(model, test, predict, type="response"),
-    preds = map(preds, inv_fun),
-    r2 = map_dbl(map(model, summary), "r.squared"),
-    #nrmse = map2_dbl(preds, map(test, resample_get, col_name="td.miles.Transit"), calc_nrmse),
-    rmse = map2_dbl(preds, map(test, resample_get, col_name="atd.miles.Transit"), calc_rmse)
-    #rmse = map2_dbl(model, test, modelr::rmse)
+est_model_with <- function(data, fmla_df)
+  data %>%
+  left_join(fmla_df) %>%
+  mutate(model = map2(train, fmla, est_model),
+         # #y_train = map(train, resample_get, col_name="DVMT"),
+         # #preds_train = map2(model, train, predict, type="response"),
+         # #bias.adj = map(y_train, preds_train, ~mean(y_train/preds_train, na.rm=TRUE)),
+         preds = map2(model, test, ~predict(.x, .y)),
+         yhat = map2(preds, post_func, `.y(.x)`),
+         y_name = map_chr(model, ~all.vars(terms(.))[1]),
+         y = map2(test, y_name, ~.x[[.y]]),
+         rmse = map2_dbl(yhat, y, rmse),
+         nrmse = map2_dbl(yhat, y, nrmse),
+         AIC=map_dbl(model, AIC),
+         BIC=map_dbl(model, BIC)
+         # compute McFadden's R2
+         #r2_model0 = map2(model, train, ~update(.x, .~1, data=.y)),
+         #r2_ll0 = map_dbl(r2_model0, logLik),
+         #r2_ll1 = map_dbl(model, logLik),
+         #pseudo.r2 = 1 - r2_ll1/r2_ll0
   ) %>%
-  dplyr::select(-c(test, train)) %>%
-  I() #name_list.cols()
+  #add_pseudo_r2() %>%
+  #dplyr::select(-c(test, train)) %>%
+  dplyr::select(-starts_with("r2_"))
 
-TransitTLModel_df$model %>% map(summary)
-TransitTLModel_df$post_func <- list(inv_fun)
+m1cv <- mm_df %>%
+  est_model_with(BikeTFL_fmlas)
 
-TransitTFLModel_df <- bind_rows(TransitTFModel_df %>% mutate(step=1),
-                             TransitTLModel_df %>% mutate(step=2)) %>%
-  select(metro, step, model, post_func) %>%
+m1cv %>%
+  dplyr::select(metro, ends_with("rmse"), ends_with("r2")) %>%
+  #group_by(model_name) %>%
+  summarize_each(funs(mean))
+
+TransitTFLModel_df <- m1cv %>%
+  dplyr::select(metro, model, post_func) %>%
   mutate(model=map(model, trim_model))
 
 devtools::use_data(TransitTFLModel_df, overwrite = TRUE)
