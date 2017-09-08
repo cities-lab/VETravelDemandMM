@@ -389,7 +389,7 @@ PredictBikePMT <- function(L) {
   # segmenting columns must appear in D_df
   stopifnot(all(SegmentCol_vc %in% names(D_df)))
 
-  Preds <- do_predictions(Model_df, D_df,
+  Preds <- DoPredictions(Model_df, D_df,
                  dataset_name, id_name, y_name, SegmentCol_vc)
 
   # fill NA with 0s - produced with negative predictions before inversing power transformation

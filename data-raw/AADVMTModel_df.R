@@ -1,12 +1,12 @@
 library(tidyverse)
 library(splines)
 
-source('../code/functions.R')
-source('../code/load_data.R')
-source('../code/comp_dependencies.R')
-source('../code/rename_variables.R')
-source('../code/partition_data.R')
-source('../code/est_models.R')
+#source('../code/functions.R')
+#source('../code/load_data.R')
+#source('../code/comp_dependencies.R')
+#source('../code/rename_variables.R')
+#source('../code/partition_data.R')
+#source('../code/est_models.R')
 
 hh_df_file <- "../output/intermediate/hh_df.rda"
 hh_df <- load_or_source(hh_df_file, "hh.df")

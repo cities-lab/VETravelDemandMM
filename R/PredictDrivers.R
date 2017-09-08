@@ -21,10 +21,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-library(tidyverse)
-library(visioneval)
-library(MASS)
-
 #=============================================
 #SECTION 1: ESTIMATE AND SAVE MODEL PARAMETERS
 #=============================================
@@ -170,7 +166,7 @@ rm(PredictDriversSpecifications)
 #' specifications for the module.
 #' @import visioneval
 #' @import tidyverse
-#' @import MASS
+#' @importFrom MASS polr
 #' @export
 PredictDrivers <- function(L) {
   dataset_name <- "Household"

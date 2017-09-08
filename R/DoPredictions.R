@@ -1,7 +1,7 @@
 #------------------------------------------------------
 #' run predictions on Dataset_df with model objects in Model_df
 #'
-#' \code{do_predictions} predicts outcomes (y) for each observation in the Dataset_df
+#' \code{DoPredictions} predicts outcomes (y) for each observation in the Dataset_df
 #' dataset using independent variables included in Dataset_df and model objects saved
 #' in list-column data_frame Model_df.
 #'
@@ -27,7 +27,7 @@
 #' @importFrom splines ns
 #' @export
 #'
-do_predictions <- function(Model_df, Dataset_df,
+DoPredictions <- function(Model_df, Dataset_df,
                            dataset_name, id_name, y_name, SegmentCol_vc=NULL) {
   #create household list-column data_frame and join with Model_df
   if (is.null(SegmentCol_vc)) {
@@ -68,7 +68,7 @@ do_predictions <- function(Model_df, Dataset_df,
       arrange(step) %>%
       group_by_(SegmentCol_vc) %>%
       summarize(data=list(first(data)),
-                y=combine_preds(y)) %>%
+                y=CombinePreds(y)) %>%
       ungroup()
   }
 
@@ -80,30 +80,42 @@ do_predictions <- function(Model_df, Dataset_df,
 
 #' internal function that handles pass a list column of a data frame to another
 #' list column as argument.
-#' Example:
+#' @param .x the data argument for function call `.y(.x)`
+#' @param .y the function to be used for call `.y(.x)`
+#' @return a list with result from call `.y(.x)`
+#' @examples
+#' require(tidyverse)
 #' lcdf <- mtcars %>% nest(-cyl)
 #' lcdf$fmla <- list(~lm(mpg~wt, data=.x))
 #' lcdf <- lcdf %>% mutate(fit=map2(data, fmla, `.y(.x)`))
 #' lcdf$fit %>% map(summary)
-#' @import tidyverse
 `.y(.x)` <- function(.x, .y, ...) {
-  at_depth(.x, 0, .y, ...)
-  #map(list(.x), .y, ...)[[1]]
+  #at_depth(.x, 0, .y, ...)
+  purrr::map(list(.x), .y, ...)[[1]]
 }
 
 #'
-#' Used to combine predictions from multiple models:
+#' Combine predictions from multiple models:
 #'  for example combine GreenSTEP zero dvmt glm model and dvmt lm model
-#'  Example (a clumsy way to square mpg):
+#'  As an example (a clumsy way to square mpg):
+#' @param preds_ls A list of prediction vectors for each modeling steps
+#' @param func function used to combine results from modeling steps
+#' @param init initial value, pass to the `.init` of `reduce()`
+#' @param ... additional argument passed to `reduce`
+#' @return a list with the combined predictions
+#' @import tidyverse
+#' @examples
+#'  library(tidyverse)
 #'  mtcars %>%
 #'    nest(-cyl) %>%
 #'    crossing(tibble(x=c(1, 2))) %>%
 #'    mutate(mpg=map(data, "mpg")) %>%
 #'    group_by(cyl) %>%
 #'    summarise(mpg1 = list(mpg[[1]]),
-#'              mpg2 = combine_preds(mpg)) %>%
+#'              mpg2 = CombinePreds(mpg)) %>%
 #'    mutate(test=map2_lgl(mpg1, mpg2, ~all(.y==.x^2)))
+#' @export
 #'
-combine_preds <- function(preds_ls, func=`*`, init=1.0, ...) {
+CombinePreds <- function(preds_ls, func=`*`, init=1.0, ...) {
   list( reduce(preds_ls, `*`, ..., .init=init) )
 }

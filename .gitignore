@@ -1,0 +1,7 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+Log_*.txt
+tests/Log_*.txt
+tests/ModelState.Rda

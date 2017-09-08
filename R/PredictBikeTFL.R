@@ -131,7 +131,7 @@ devtools::use_data(PredictBikeTFLSpecifications, overwrite = TRUE)
 #SECTION 3: DEFINE FUNCTIONS THAT IMPLEMENT THE SUBMODEL
 #=======================================================
 
-# Main module function that predicts total person miles traveled by bike 
+# Main module function that predicts total person miles traveled by bike
 # for households
 #------------------------------------------------------
 #' Main module function
@@ -167,19 +167,19 @@ PredictBikeTFL <- function(L) {
   dataset_name <- "Household"
   id_name <- "HhId"
   y_name <- "PMTBike"
-  
+
   D_df <- data.frame(L$Year[[dataset_name]])
   stopifnot("data.frame" %in% class(D_df))
-  
+
   load("data/BikeTFLModel_df.rda")
   Model_df <- BikeTFLModel_df
-  
+
   # find cols used for segmenting households ("metro" by default)
   SegmentCol_vc <- setdiff(names(Model_df), c("model", "step", "post_func", "bias_adj"))
-  
+
   # segmenting columns must appear in D_df
   stopifnot(all(SegmentCol_vc %in% names(D_df)))
-  
-  do_predictions(Model_df, D_df, 
+
+  DoPredictions(Model_df, D_df,
                  dataset_name, id_name, y_name, SegmentCol_vc)
 }
