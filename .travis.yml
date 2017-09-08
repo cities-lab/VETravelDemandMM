@@ -8,10 +8,10 @@ cache: packages
 warnings_are_errors: false
 
 install:
-  - Rscript -e 'install.packages(c("devtools", "remotes", "roxygen2", "stringr", "knitr"))'
+  - Rscript -e 'install.packages(c("devtools", "roxygen2", "stringr", "knitr"))'
   - Rscript -e 'devtools::install_bioc(c("BiocInstaller", "rhdf5"))'
 
 script:
-  - Rscript -e 'remotes::install_deps(".")'
+  - Rscript -e 'devtools::install_deps(".")'
   - Rscript -e 'devtools::check(".")'
   - Rscript tests/scripts/test.R

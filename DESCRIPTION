@@ -10,10 +10,10 @@ Description: This package contains a module for the VisionEval framework that si
      multi-modal travel demand for households.
 License: Apache 2
 LazyData: TRUE
-Depends: 
-    R (>= 3.4.0)
+Depends:
+    R (>= 3.4.0),
+    visioneval
 Imports:
-    visioneval,
     tidyverse,
     dplyr,
     purrr,
@@ -25,10 +25,11 @@ Imports:
 Suggests:
     knitr,
     NHTS2009,
-    SLD
+    SLD,
+    rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
-Remotes: 
-    gregorbj/VisionEval/sources/framework/visioneval@develop
-    cities-lab/NHTS2009
+Remotes:
+    gregorbj/VisionEval/sources/framework/visioneval@develop,
+    cities-lab/NHTS2009,
     cities-lab/SLD

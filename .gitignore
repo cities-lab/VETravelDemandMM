@@ -5,3 +5,4 @@
 Log_*.txt
 tests/Log_*.txt
 tests/ModelState.Rda
+inst/doc
