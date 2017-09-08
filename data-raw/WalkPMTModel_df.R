@@ -31,12 +31,15 @@ WalkPMT_fmlas <- tribble(
                                                             data= ., weights=.$hhwgt, na.action=na.exclude)
 )
 
-m1cv <- est_model_with(mm_df, WalkPMT_fmlas)
+m1cv <- mm_df %>%
+  EstModelWith(WalkPMT_fmlas) %>%
+  name_list.cols(name_cols=c("metro"))
+
 m1cv$model %>% map(summary)
-m1cv %>% dplyr::select(name, metro, rmse, nrmse, preds, yhat, y)
+m1cv %>% dplyr::select(name, metro, preds, yhat, y)
 
 WalkPMTModel_df <-  m1cv %>%
   dplyr::select(metro, model, post_func) %>%
-  mutate(model=map(model, trim_model))
+  mutate(model=map(model, TrimModel))
 
-devtools::use_data(WalkPMTModel_df, overwrite = TRUE)
+#devtools::use_data(WalkPMTModel_df, overwrite = TRUE)

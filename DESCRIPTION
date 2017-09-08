@@ -1,14 +1,14 @@
-Package: VETravelDemandNG
+Package: VETravelDemandMM
 Type: Package
-Title: Simulate Travel Demand for Households
+Title: Simulate Multi-Modal Travel Demand for Households
 Version: 0.2.0
 Author: Liming Wang <lmwang@gmail.com>["aut", "cre"]
 Maintainer: Liming Wang <lmwang@gmail.com>
 Copyright: Portland State University
-URL: https://github.com/cities-lab/VETravelDemandNG
+URL: https://github.com/cities-lab/VETravelDemandMM
 Description: This package contains a module for the VisionEval framework that simulates 
-     multi-modal travel demand for households.
-License: Apache 2
+     multi-modal travel demand for individual households.
+License: file LICENSE
 LazyData: TRUE
 Depends:
     R (>= 3.4.0),

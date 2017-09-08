@@ -3,7 +3,7 @@ VisionEval (VE) is a model system and supporting software framework for building
 
 
 # VETravelDemandMM
-The Multi-Modal Travel Demand package for [VisionEval](https://gregorbj.github.io/VisionEval/)
+The Multi-Modal Travel Demand package for the [VisionEval framework](https://gregorbj.github.io/VisionEval/)
 
 This package contains a module for the VisionEval framework that simulates multi-modal travel demand for individual households:
 - Annual Average Daily VMT
@@ -13,4 +13,4 @@ This package contains a module for the VisionEval framework that simulates multi
 
 # Build Status
 
-[![Travis-CI Build Status](https://travis-ci.org/cities-lab/VETravelDemandNG.svg)](https://travis-ci.org/cities-lab/VETravelDemandNG)
+[![Travis-CI Build Status](https://travis-ci.org/cities-lab/VETravelDemandMM.svg)](https://travis-ci.org/cities-lab/VETravelDemandMM)

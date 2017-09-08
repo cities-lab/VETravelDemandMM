@@ -1,6 +1,6 @@
-#Test VETravelDemandNG module
+#Test VETravelDemandMM module
 library(visioneval)
-library(VETravelDemandNG)
+library(VETravelDemandMM)
 
 TestDir <- normalizePath(".")
 if (!endsWith(TestDir, 'tests'))

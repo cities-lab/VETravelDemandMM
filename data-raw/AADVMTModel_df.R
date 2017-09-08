@@ -23,26 +23,14 @@ AADVMT_fmlas <- tribble(
 )
 
 AADVMT_lm <- mm_df %>%
-  left_join(AADVMT_fmlas, by="metro") %>%
-  mutate(model = map2(train, fmla, est_model),
-         preds = map2(model, test, ~predict(.x, .y)),
-         yhat = map2(preds, post_func, `.y(.x)`),
-         y = map(test, "AADVMT"),
-         rmse = map2_dbl(yhat, y, rmse),
-         nrmse = map2_dbl(yhat, y, nrmse),
-         AIC=map_dbl(model, AIC),
-         BIC=map_dbl(model, BIC),
-         r.squared = map_dbl(map(model, summary), "r.squared")
-  ) %>%
-  #add_pseudo_r2() %>%
-  dplyr::select(-c(test, train)) %>%
-  dplyr::select(-starts_with("r2_"))
+  EstModelWith(AADVMT_fmlas) %>%
+  name_list.cols(name_cols="metro")
 
 AADVMT_lm$model %>% map(summary)
 AADVMT_lm
 
 AADVMTModel_df <- AADVMT_lm %>%
   dplyr::select(metro, model, post_func) %>%
-  mutate(model=map(model, trim_model))
+  mutate(model=map(model, TrimModel))
 
-devtools::use_data(AADVMTModel_df, overwrite = TRUE)
+#devtools::use_data(AADVMTModel_df, overwrite = TRUE)

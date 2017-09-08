@@ -1,3 +1,18 @@
+#' This script load necessary data for model estimation In addition to the two
+#' major datasets in NHTS2009 and SLD package, it reads a few additional data
+#' sets in inst/extdata:
+#'
+#'     - confidential residence block group for households in NHTS 2009
+#'       (in hhctbg.csv)
+#'     - Table HM71 and HM72 from HPMS
+#'     - UZA transit system stats from National Transit Database
+#'     - list of Urban Area and its name from the Census Beauru
+#'     - Place types derived from EPA's Smart Location Database
+#'
+#' You will not be able to run this script unless you have a copy of the
+#' confidential residence block group for households in NHTS 2009, which we are
+#' not able to share due to the confidentiality agreement.
+
 library(NHTS2009)
 library(SLD)
 library(tidyverse)

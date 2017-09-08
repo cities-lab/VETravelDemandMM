@@ -1,4 +1,5 @@
-#------------------------------------------------------
+#' Helper functions for running predictions
+#'
 #' run predictions on Dataset_df with model objects in Model_df
 #'
 #' \code{DoPredictions} predicts outcomes (y) for each observation in the Dataset_df
