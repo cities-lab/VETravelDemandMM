@@ -22,21 +22,21 @@ mm_df <- tibble(.id=1,
 #' model formula as a tibble (data.frame), also include a
 #' `post_func` column with functions de-transforming predictions to the original
 #' scale of the dependent variable
-Vehicles_fmlas <- tribble(
+fmlas_df <- tribble(
   ~.id, ~model_name, ~post_func, ~fmla,
   1,       "ologit",  function(y) as.integer(as.character(y)),   ~polr(Vehicles_f ~ DrvAgePop + Workers + LogIncome + LifeCycle,
                                                                    data=., weights=.$hhwgt, na.action=na.exclude, Hess=TRUE)
 )
 
 #' call function to estimate models
-Vehicles_ologit <- mm_df %>%
-  EstModelWith(Vehicles_fmlas)
+model_df <- mm_df %>%
+  EstModelWith(fmlas_df)
 
 #' print model summary and goodness of fit
-Vehicles_ologit$model %>% map(summary)
+model_df$model %>% map(summary)
 
 #' trim model object to save space
-VehiclesModel_df <- Vehicles_ologit %>%
+VehiclesModel_df <- model_df %>%
   dplyr::select(model, post_func) %>%
   mutate(model=map(model, TrimModel))
 

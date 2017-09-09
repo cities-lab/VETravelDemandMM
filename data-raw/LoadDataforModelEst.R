@@ -30,7 +30,7 @@ hhctbg.geoid <- hhctbg %>%
 Hh_df <- Hh_df %>% left_join(hhctbg.geoid, by="HOUSEID")
 
 # 2015 NTD system wide operation and services time series (prepared by Brian Gregor)
-NTD_df <- read_excel("inst/extdata/Transit Service Levels (Miles and Hours) - Comparison Regions.xlsx",
+NTD_df <- read_excel("inst/extdata/NTD-TS2.2.xlsx",
                       sheet="UZA Totals-20", col_names=T, skip=2)
 
 NTD_df <- NTD_df %>% dplyr::select(UZA, UZAVehOp=VehOp,
@@ -290,6 +290,8 @@ SLD_df %<>% left_join(placetype, by="GEOID10") %>%
 ## Doesn't work without confidential data
 Hh_df <- Hh_df %>% left_join(SLD_df, by="GEOID10")
 
+
+
 Hh_df <- Hh_df %>% mutate(
   metro=ifelse(is.na(UZAAVRM) | is.na(UZAFWLM), "non_metro", "metro"),
   TranRevMiPC=UZAAVRM/UZAPOP,
@@ -305,7 +307,34 @@ Hh_df <- Hh_df %>% mutate(
   TRJOBPOP=ifelse(TRPOP==0, 0, TREMP/TRPOP),
   TRJOBHH=ifelse(TRHU==0, 0, TREMP/TRHU),
 
-  D5ar1k = D5ar/1000,
-
-  hhwgt=WTHHFIN * n()/sum(WTHHFIN) #normalize hh weights
-)
+  #normalize hh weights
+  hhwgt=WTHHFIN * n()/sum(WTHHFIN) ) %>%
+  dplyr::select(
+    HOUSEID,
+    Age0to14,
+    Age65Plus,
+    AADVMT,
+    atd.miles.Bike,
+    atd.miles.Transit,
+    atd.miles.Walk,
+    CENSUS_R,
+    D1B, D1C, D2A_EPHHM, D2A_WRKEMP, D3bpo4, D4c, D5,
+    Drivers,
+    DrvAgePop,
+    FwyLaneMiPC,
+    HhSize,
+    hhwgt,
+    LifeCycle,
+    LogIncome,
+    metro,
+    ntrips.Bike,
+    ntrips.Transit,
+    ntrips.Walk,
+    td.miles.Bike,
+    td.miles.Transit,
+    td.miles.Walk,
+    TranRevMiPC,
+    VehPerDriver,
+    Vehicles,
+    Workers
+  )

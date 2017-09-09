@@ -19,43 +19,43 @@ mm_df <- Hh_df %>%
 #' model formula for each segment as a tibble (data.frame), also include a
 #' `post_func` column with functions de-transforming predictions to the original
 #' scale of the dependent variable
-BikeTFL_fmlas <- tribble(
+fmlas_df <- tribble(
   ~metro,  ~step, ~post_func,      ~fmla,
   "metro",    1,  function(y) y,   ~pscl::hurdle(ntrips.Transit ~ AADVMT+HhSize+LifeCycle+
-                                                   Age0to14+D1D+TranRevMiPC+D4c |
-                                                   AADVMT+VehPerDriver+HhSize+Workers+LifeCycle+Age0to14+D1D+
+                                                   Age0to14+D1B+TranRevMiPC+D4c |
+                                                   AADVMT+VehPerDriver+HhSize+Workers+LifeCycle+Age0to14+D1B+
                                                    FwyLaneMiPC+TranRevMiPC:D4c,
                                                  data=., weights=.$hhwgt, na.action=na.omit),
   "metro",    2,  function(y) exp(y), ~lm(log(atd.miles.Transit) ~ AADVMT + VehPerDriver + Age0to14 +
-                                            Age65Plus + LogIncome + LifeCycle + D2A_JPHH +
-                                            D1B + D3bmm4 + D5cri + TranRevMiPC + TranRevMiPC:D4c,
+                                            Age65Plus + LogIncome + LifeCycle + D2A_EPHHM +
+                                            D1B + D3bpo4 + D5 + TranRevMiPC + TranRevMiPC:D4c,
                                           data=., subset=(atd.miles.Transit > 0), weights=.$hhwgt, na.action=na.omit),
   "non_metro",1,  function(y) y,   ~pscl::hurdle(ntrips.Transit ~  log1p(AADVMT)+log1p(VehPerDriver)+HhSize+LifeCycle+
-                                                   Age0to14+LogIncome+D1D |
-                                                   log1p(AADVMT)+log1p(VehPerDriver)+Workers+LifeCycle+Age0to14+D1B+D3bmm4+
+                                                   Age0to14+LogIncome+D1B |
+                                                   log1p(AADVMT)+log1p(VehPerDriver)+Workers+LifeCycle+Age0to14+D1B+D3bpo4+
                                                    LogIncome,
                                                  data=., weights=.$hhwgt, na.action=na.omit),
   "non_metro",2,  function(y) exp(y),  ~lm(log(atd.miles.Transit) ~ AADVMT + Age0to14 +
-                                             Age65Plus + LogIncome + LifeCycle + D2A_JPHH +
-                                             D1B + D5cri,
+                                             Age65Plus + LogIncome + LifeCycle + D2A_EPHHM +
+                                             D1B + D5,
                                            data=., subset=(atd.miles.Transit > 0), weights=.$hhwgt, na.action=na.omit)
 )
 
 #' call function to estimate models for each segment and add name for each
 #' segment
-m1cv <- mm_df %>%
-  EstModelWith(BikeTFL_fmlas) %>%
+model_df <- mm_df %>%
+  EstModelWith(fmlas_df) %>%
   name_list.cols(name_cols=c("metro", "step"))
 
 #' print model summary and goodness of fit
-m1cv$model %>% map(summary)
-m1cv #%>%
+model_df$model %>% map(summary)
+model_df #%>%
   #dplyr::select(metro, ends_with("rmse"), ends_with("r2")) %>%
   #group_by(metro) %>%
   #summarize_all(funs(mean))
 
 #' trim model object to save space
-TransitTFLModel_df <- m1cv %>%
+TransitTFLModel_df <- model_df %>%
   dplyr::select(metro, model, post_func) %>%
   mutate(model=map(model, TrimModel))
 

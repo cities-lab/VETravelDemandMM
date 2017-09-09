@@ -23,33 +23,33 @@ fctr_round1 <- function(x) as.factor(round(x, digits=1))
 #' model formula for each segment as a tibble (data.frame), also include a
 #' `post_func` column with functions de-transforming predictions to the original
 #' scale of the dependent variable
-WalkPMT_fmlas <- tribble(
+fmlas_df <- tribble(
   ~name,   ~metro,      ~post_func,      ~fmla,
   "hurdle", "metro",    function(y) y,   ~pscl::hurdle(int_cround(td.miles.Walk) ~ AADVMT + Workers + VehPerDriver +
                                                           LifeCycle + Age0to14 + CENSUS_R + D1B+D2A_EPHHM + FwyLaneMiPC + TranRevMiPC:D4c +
-                                                            D5 + D3apo |
-                                                            AADVMT + Workers + LifeCycle + Age0to14 + CENSUS_R +  D1B:D2A_EPHHM + D3apo
+                                                            D5 + D3bpo4 |
+                                                            AADVMT + Workers + LifeCycle + Age0to14 + CENSUS_R +  D1B:D2A_EPHHM + D3bpo4
                                                           + D5 + TranRevMiPC,
                                                         data= ., weights=.$hhwgt, na.action=na.exclude),
   "hurdle", "non_metro",function(y) y,   ~pscl::hurdle(int_cround(td.miles.Walk) ~ AADVMT + HhSize + VehPerDriver +
                                                               LifeCycle + Age0to14 + Age65Plus + CENSUS_R + D1B + D1B:D2A_EPHHM + D3bpo4 |
                                                               AADVMT + Workers + LogIncome + HhSize +
-                                                              Age0to14 + CENSUS_R + D3apo + D5,
+                                                              Age0to14 + CENSUS_R + D3bpo4 + D5,
                                                             data= ., weights=.$hhwgt, na.action=na.exclude)
 )
 
 #' call function to estimate models for each segment and add name for each
 #' segment
-m1cv <- mm_df %>%
-  EstModelWith(WalkPMT_fmlas) %>%
+model_df <- mm_df %>%
+  EstModelWith(fmlas_df) %>%
   name_list.cols(name_cols=c("metro"))
 
 #' print model summary and goodness of fit
-m1cv$model %>% map(summary)
-m1cv #%>% dplyr::select(name, metro, preds, yhat, y)
+model_df$model %>% map(summary)
+model_df #%>% dplyr::select(name, metro, preds, yhat, y)
 
 #' trim model object to save space
-WalkPMTModel_df <-  m1cv %>%
+WalkPMTModel_df <-  model_df %>%
   dplyr::select(metro, model, post_func) %>%
   mutate(model=map(model, TrimModel))
 
