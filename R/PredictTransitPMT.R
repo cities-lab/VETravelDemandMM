@@ -1,28 +1,11 @@
 #================ PredictTransitPMT.R ================
 
-#This module predicts drivers for households. It uses the model object in
-#data/PredictDrivers_df.rda (ordered logit model by default) and variables and
-#coefficients therein to predict Drivers.
+#This module predicts TransitPMT for households. It uses the model object in
+#data/PredictTransitPMT_df.rda and variables and coefficients therein to predict
+#TransitPMT.
 
-# Copyright [2017] [AASHTO]
-# Based in part on works previously copyrighted by the Oregon Department of
-# Transportation and made available under the Apache License, Version 2.0 and
-# compatible open-source licenses.
-
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-library(visioneval)
-library(tidyverse)
+#library(visioneval)
+#library(tidyverse)
 
 #=============================================
 #SECTION 1: ESTIMATE AND SAVE MODEL PARAMETERS
@@ -301,7 +284,6 @@ PredictTransitPMTSpecifications <- list(
 #'  \item{Get}{module inputs to be read from the datastore}
 #'  \item{Set}{module outputs to be written to the datastore}
 #' }
-#' @source PredictTransitPMT.R script.
 "PredictTransitPMTSpecifications"
 devtools::use_data(PredictTransitPMTSpecifications, overwrite = TRUE)
 
@@ -405,3 +387,8 @@ PredictTransitPMT <- function(L) {
   #Return the list
   Out_ls
 }
+
+#====================
+#SECTION 4: TEST CODE
+#====================
+# model test code is in tests/scripts/test.R

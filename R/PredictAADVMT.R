@@ -1,8 +1,8 @@
-#================ PredictDrivers.R ================
+#================ PredictAADVMT.R ================
 
-#This module predicts drivers for households. It uses the model object in
-#data/PredictDrivers_df.rda (ordered logit model by default) and variables and
-#coefficients therein to predict Drivers.
+#This module predicts AADVMT for households. It uses the model object in
+#data/AADVMTModel_df.rda and variables and coefficients therein to predict
+#AADVMT.
 
 #=============================================
 #SECTION 1: ESTIMATE AND SAVE MODEL PARAMETERS
@@ -261,7 +261,6 @@ PredictAADVMTSpecifications <- list(
 #'  \item{Get}{module inputs to be read from the datastore}
 #'  \item{Set}{module outputs to be written to the datastore}
 #' }
-#' @source PredictAADVMT.R script.
 "PredictAADVMTSpecifications"
 devtools::use_data(PredictAADVMTSpecifications, overwrite = TRUE)
 
@@ -366,3 +365,8 @@ PredictAADVMT <- function(L) {
   #Return the list
   Out_ls
 }
+
+#====================
+#SECTION 4: TEST CODE
+#====================
+# model test code is in tests/scripts/test.R

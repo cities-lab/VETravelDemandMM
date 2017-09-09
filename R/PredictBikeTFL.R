@@ -1,16 +1,19 @@
 #================== PredictBikeTFL.R ==================
-#This module predicts bike trip frequency and average trip length for
-#households with households & locational characteristics (5Ds)
+#
+#This module predicts bike trip frequency (BikeTrips) and average trip length
+#(BikeAvgTripDist) for households. It uses the model object in
+#data/BikeTFLModel_df.rda and variables and coefficients therein to predict.
 
-library(visioneval)
+#library(visioneval)
 
-# model specification (model object) is to be read from RData
+#=============================================
+#SECTION 1: ESTIMATE AND SAVE MODEL PARAMETERS
+#=============================================
+#See data-raw/BikePMTModel_df.R
 
-## TODO: revise data specifications
 #================================================
-#SECTION 1: DEFINE THE MODULE DATA SPECIFICATIONS
+#SECTION 2: DEFINE THE MODULE DATA SPECIFICATIONS
 #================================================
-
 #Define the data specifications
 #------------------------------
 PredictBikeTFLSpecifications <- list(
@@ -74,7 +77,7 @@ PredictBikeTFLSpecifications <- list(
   #Specify data to saved in the data store
   Set = items(
     item(
-      NAME = "ntrips_Bike",
+      NAME = "BikeTrips",
       TABLE = "Household",
       GROUP = "Year",
       TYPE = "integer",
@@ -85,7 +88,7 @@ PredictBikeTFLSpecifications <- list(
       SIZE = 0
     ),
     item(
-      NAME = "TripDistance_Bike",
+      NAME = "BikeAvgTripDist",
       TABLE = "Household",
       GROUP = "Year",
       TYPE = "integer",
@@ -122,7 +125,6 @@ PredictBikeTFLSpecifications <- list(
 #'  \item{Get}{module inputs to be read from the datastore}
 #'  \item{Set}{module outputs to be written to the datastore}
 #' }
-#' @source PredictBikeTFL.R script.
 "PredictBikeTFLSpecifications"
 devtools::use_data(PredictBikeTFLSpecifications, overwrite = TRUE)
 
@@ -131,24 +133,30 @@ devtools::use_data(PredictBikeTFLSpecifications, overwrite = TRUE)
 #SECTION 3: DEFINE FUNCTIONS THAT IMPLEMENT THE SUBMODEL
 #=======================================================
 
-# Main module function that predicts total person miles traveled by bike
-# for households
+#Main module function that predicts Bike Trip Frequency and Length for households
 #------------------------------------------------------
 #' Main module function
 #'
-#' \code{PredictBikeTFL} predicts person miles traveled by bike for each
+#' \code{PredictBikeTFL} predicts Bike Trip Frequency and Length (TFL) for each
 #' household in the households dataset using independent variables including
 #' household characteristics and 5D built environment variables.
 #'
-#' This function predicts person miles traveled by bike for each hosuehold in the model
-#' region. The model objects as a part of the inputs are stored in data frame
-#' with two columns: a column for segmentation (e.g., metro, non-metro) and a
-#' 'model' column for model object (list-column data structure). The function
-#' "nests" the households data frame into a list-column data frame by segments
-#' and applies the generic predict() function for each segment to predict trip
-#' frequency and length for each household. The vectors of HhId and
-#' PMTBike produced by the PredictBikeTFL function are to be stored in
-#' the "Household" table.
+#' This function predicts BikeTFL for each hosuehold in the model region where
+#' each household is assigned an BikeTFL. The model objects as a part of the
+#' inputs are stored in data frame with two columns: a column for segmentation
+#' (e.g., metro, non-metro) and a 'model' column for model object (list-column
+#' data structure). The function "nests" the households data frame into a
+#' list-column data frame by segments and applies the generic predict() function
+#' for each segment to predict BikeTFL for each household. The vectors of HhId
+#' and BikeTFL produced by the PredictBikeTFL function are to be stored in the
+#' "Household" table.
+#'
+#' If this table does not exist, the function calculates a LENGTH value for
+#' the table and returns that as well. The framework uses this information to
+#' initialize the Households table. The function also computes the maximum
+#' numbers of characters in the HhId and Azone datasets and assigns these to a
+#' SIZE vector. This is necessary so that the framework can initialize these
+#' datasets in the datastore. All the results are returned in a list.
 #'
 #' @param L A list containing the components listed in the Get specifications
 #' for the module.
@@ -160,18 +168,40 @@ devtools::use_data(PredictBikeTFLSpecifications, overwrite = TRUE)
 #' SIZE: A named integer vector having two elements. The first element, "Azone",
 #' identifies the size of the longest Azone name. The second element, "HhId",
 #' identifies the size of the longest HhId.
+#' @import visioneval
 #' @import tidyverse
+#' @import pscl
 #' @export
 PredictBikeTFL <- function(L) {
   #TODO: get id_name from L or specification?
   dataset_name <- "Household"
   id_name <- "HhId"
-  y_name <- "PMTBike"
+
+  Bzone_df <- data.frame(L$Year[["Bzone"]])
+  stopifnot("data.frame" %in% class(Bzone_df))
+
+  Marea_df <- data.frame(L$Year[["Marea"]])
+  stopifnot("data.frame" %in% class(Marea_df))
 
   D_df <- data.frame(L$Year[[dataset_name]])
   stopifnot("data.frame" %in% class(D_df))
+  D_df <- D_df %>%
+    mutate(LogIncome=log1p(Income),
+           DrvAgePop=HhSize - Age0to14,
+           VehPerDriver=ifelse(Drivers==0 || is.na(Drivers), 0, Vehicles/Drivers),
+           LifeCycle = as.character(LifeCycle),
+           LifeCycle = ifelse(LifeCycle=="01", "Single", LifeCycle),
+           LifeCycle = ifelse(LifeCycle %in% c("02"), "Couple w/o children", LifeCycle),
+           LifeCycle = ifelse(LifeCycle %in% c("00", "03", "04", "05", "06", "07", "08"), "Couple w/ children", LifeCycle),
+           LifeCycle = ifelse(LifeCycle %in% c("09", "10"), "Empty Nester", LifeCycle)
+    ) %>%
+    left_join(Bzone_df, by="Bzone") %>%
+    crossing(Marea_df)
 
-  load("data/BikeTFLModel_df.rda")
+  #D_df <- D_df %>%
+  #  crossing(Marea_df, by="Marea")
+
+  #load("data/BikeTFLModel_df.rda")
   Model_df <- BikeTFLModel_df
 
   # find cols used for segmenting households ("metro" by default)
@@ -180,6 +210,27 @@ PredictBikeTFL <- function(L) {
   # segmenting columns must appear in D_df
   stopifnot(all(SegmentCol_vc %in% names(D_df)))
 
-  DoPredictions(Model_df, D_df,
-                 dataset_name, id_name, y_name, SegmentCol_vc)
+  Preds <- DoPredictions(Model_df, D_df,
+                         dataset_name, id_name, y_name, SegmentCol_vc, combine_preds=FALSE)
+
+  # fill NA with 0s - produced with negative predictions before inversing power transformation
+  Preds <- Preds %>%
+    mutate(y=ifelse(is.na(y) | y < 0, 0, y))
+
+  Out_ls <- initDataList()
+  Out_ls$Year$Household <-
+    list(
+      BikeTrips = -1,
+      BikeAvgTripDist = -1
+    )
+  Out_ls$Year$Household$BikeTrips       <- Preds %>% filter(step==1) %>% pull(y)
+  Out_ls$Year$Household$BikeAvgTripDist <- Preds %>% filter(step==2) %>% pull(y)
+
+  #Return the list
+  Out_ls
 }
+
+#====================
+#SECTION 4: TEST CODE
+#====================
+# model test code is in tests/scripts/test.R

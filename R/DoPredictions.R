@@ -2,34 +2,38 @@
 #'
 #' run predictions on Dataset_df with model objects in Model_df
 #'
-#' \code{DoPredictions} predicts outcomes (y) for each observation in the Dataset_df
-#' dataset using independent variables included in Dataset_df and model objects saved
-#' in list-column data_frame Model_df.
+#' \code{DoPredictions} predicts outcomes (y) for each observation in the
+#' Dataset_df dataset using independent variables included in Dataset_df and
+#' model objects saved in list-column data_frame Model_df.
 #'
-#' @param Model_df A list-column data_frame containing a 'model' list-column, column(s) used
-#' for segmenting data, and, optionally, a 'step' column and a 'post_func' for multi-step models
-#' and post-processing function for predictions.
-#' @param Dataset_df A data frame providing independent variables and segmentation column for predictions
-#' included in the specification of the model objects.
+#' @param Model_df A list-column data_frame containing a 'model' list-column,
+#'   column(s) used for segmenting data, and, optionally, a 'step' column and a
+#'   'post_func' for multi-step models and post-processing function for
+#'   predictions.
+#' @param Dataset_df A data frame providing independent variables and
+#'   segmentation column for predictions included in the specification of the
+#'   model objects.
 #' @param dataset_name A character string for name of the Dataset_df
 #' @param id_name A character string for the id column of Dataset_df
 #' @param y_name A character string for name of the outcome variable
-#' @param SegmentCol_vc A vector for columns used for segmentation; if NULL assuming columns other
-#' than c("model", "step", "post_func", "bias.adj") in Model_df is used for segmentation
-#' @return A list containing the components specified in the Set
-#' specifications for the module along with:
-#' LENGTH: A named integer vector having a single named element, "Household",
-#' which identifies the length (number of rows) of the Household table to be
-#' created in the datastore.
-#' SIZE: A named integer vector having two elements. The first element, "Azone",
-#' identifies the size of the longest Azone name. The second element, "HhId",
-#' identifies the size of the longest HhId.
+#' @param SegmentCol_vc A vector for columns used for segmentation; if NULL
+#'   assuming columns other than c("model", "step", "post_func", "bias.adj") in
+#'   Model_df is used for segmentation
+#' @param combine_preds A logical flag indicating whether to combine predictions
+#'   for multi-step models (default FALSE)
+#' @return A list containing the components specified in the Set specifications
+#'   for the module along with: LENGTH: A named integer vector having a single
+#'   named element, "Household", which identifies the length (number of rows) of
+#'   the Household table to be created in the datastore. SIZE: A named integer
+#'   vector having two elements. The first element, "Azone", identifies the size
+#'   of the longest Azone name. The second element, "HhId", identifies the size
+#'   of the longest HhId.
 #' @import tidyverse
 #' @importFrom splines ns
 #' @export
 #'
 DoPredictions <- function(Model_df, Dataset_df,
-                           dataset_name, id_name, y_name, SegmentCol_vc=NULL) {
+                           dataset_name, id_name, y_name, SegmentCol_vc=NULL, combine_preds=FALSE) {
   #create household list-column data_frame and join with Model_df
   if (is.null(SegmentCol_vc)) {
     SegmentCol_vc <- setdiff(names(Model_df), c("model", "step", "post_func", "bias_adj"))
@@ -64,7 +68,7 @@ DoPredictions <- function(Model_df, Dataset_df,
   # zero VMT model + 2. non-zero VMT regression model). For now,
   # combine_preds multiplies predictions from each step, it's possible to pass
   # other functions to it
-  if ("step" %in% names(Preds_lcdf)) {
+  if (combine_preds & "step" %in% names(Preds_lcdf)) {
     Preds_lcdf <- Preds_lcdf %>%
       arrange(step) %>%
       group_by_(SegmentCol_vc) %>%
@@ -96,9 +100,8 @@ DoPredictions <- function(Model_df, Dataset_df,
 }
 
 #'
-#' Combine predictions from multiple models:
-#'  for example combine GreenSTEP zero dvmt glm model and dvmt lm model
-#'  As an example (a clumsy way to square mpg):
+#' Combine predictions from multiple models: for example combine GreenSTEP zero
+#' dvmt glm model and dvmt lm model As an example (a clumsy way to square mpg):
 #' @param preds_ls A list of prediction vectors for each modeling steps
 #' @param func function used to combine results from modeling steps
 #' @param init initial value, pass to the `.init` of `reduce()`
