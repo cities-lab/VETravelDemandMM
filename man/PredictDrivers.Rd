@@ -2,7 +2,7 @@
 % Please edit documentation in R/PredictDrivers.R
 \name{PredictDrivers}
 \alias{PredictDrivers}
-\title{Main module function to predict Drivers by age for each household}
+\title{Main module function to predict Drivers for each household}
 \usage{
 PredictDrivers(L)
 }
@@ -15,10 +15,7 @@ A list containing the components specified in the Set
 specifications for the module.
 }
 \description{
-\code{PredictDrivers} predicts the number of Drivers by age group for each
-household and tallies the total number of Drivers for each household.
-}
-\details{
-This function predicts the number of Drivers for each household. Household
-Drivers are assigned to 5 age groups: 15-19, 20-29, 30-54, 55-64, and 65Plus.
+\code{PredictDrivers} predicts the number of Drivers for each
+household and tallies the total number of Drivers for each household. It uses
+the model specifications in the model object in data/DriversModel_df.rda.
 }

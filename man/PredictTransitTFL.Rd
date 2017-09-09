@@ -21,18 +21,25 @@ identifies the size of the longest Azone name. The second element, "HhId",
 identifies the size of the longest HhId.
 }
 \description{
-\code{PredictTransitTFL} predicts person miles traveled by Transit for each
+\code{PredictTransitTFL} predicts Transit Trip Frequency and Length (TFL) for each
 household in the households dataset using independent variables including
 household characteristics and 5D built environment variables.
 }
 \details{
-This function predicts person miles traveled by Transit for each hosuehold in
-the model region. The model objects as a part of the inputs are stored in
-data frame with two columns: a column for segmentation (e.g., metro,
-non-metro) and a 'model' column for model object (list-column data
-structure). The function "nests" the households data frame into a list-column
-data frame by segments and applies the generic predict() function for each
-segment to predict trip frequency and length for each household. The vectors
-of HhId and PMTTransit produced by the PredictTransitTFL function are to
-be stored in the "Household" table.
+This function predicts TransitTFL for each hosuehold in the model region where
+each household is assigned an TransitTFL. The model objects as a part of the
+inputs are stored in data frame with two columns: a column for segmentation
+(e.g., metro, non-metro) and a 'model' column for model object (list-column
+data structure). The function "nests" the households data frame into a
+list-column data frame by segments and applies the generic predict() function
+for each segment to predict TransitTFL for each household. The vectors of HhId
+and TransitTFL produced by the PredictTransitTFL function are to be stored in the
+"Household" table.
+
+If this table does not exist, the function calculates a LENGTH value for
+the table and returns that as well. The framework uses this information to
+initialize the Households table. The function also computes the maximum
+numbers of characters in the HhId and Azone datasets and assigns these to a
+SIZE vector. This is necessary so that the framework can initialize these
+datasets in the datastore. All the results are returned in a list.
 }

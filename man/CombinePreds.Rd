@@ -2,9 +2,8 @@
 % Please edit documentation in R/DoPredictions.R
 \name{CombinePreds}
 \alias{CombinePreds}
-\title{Combine predictions from multiple models:
- for example combine GreenSTEP zero dvmt glm model and dvmt lm model
- As an example (a clumsy way to square mpg):}
+\title{Combine predictions from multiple models: for example combine GreenSTEP zero
+dvmt glm model and dvmt lm model As an example (a clumsy way to square mpg):}
 \usage{
 CombinePreds(preds_ls, func = `*`, init = 1, ...)
 }
@@ -21,9 +20,8 @@ CombinePreds(preds_ls, func = `*`, init = 1, ...)
 a list with the combined predictions
 }
 \description{
-Combine predictions from multiple models:
- for example combine GreenSTEP zero dvmt glm model and dvmt lm model
- As an example (a clumsy way to square mpg):
+Combine predictions from multiple models: for example combine GreenSTEP zero
+dvmt glm model and dvmt lm model As an example (a clumsy way to square mpg):
 }
 \examples{
  library(tidyverse)

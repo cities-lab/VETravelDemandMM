@@ -2,7 +2,7 @@
 % Please edit documentation in R/PredictVehicles.R
 \name{PredictVehicles}
 \alias{PredictVehicles}
-\title{Main module function to predict Vehicles by age for each household}
+\title{Main module function to predict Vehicles for each household}
 \usage{
 PredictVehicles(L)
 }
@@ -15,10 +15,9 @@ A list containing the components specified in the Set
 specifications for the module.
 }
 \description{
-\code{PredictVehicles} predicts the number of Vehicles by age group for each
+\code{PredictVehicles} predicts the number of Vehicles for each
 household and tallies the total number of Vehicles for each household.
 }
 \details{
-This function predicts the number of Vehicles for each household. Household
-Vehicles are assigned to 5 age groups: 15-19, 20-29, 30-54, 55-64, and 65Plus.
+This function predicts the number of Vehicles for each household. It uses
 }

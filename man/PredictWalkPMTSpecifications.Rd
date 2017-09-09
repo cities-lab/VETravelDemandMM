@@ -12,9 +12,6 @@
  \item{Get}{module inputs to be read from the datastore}
  \item{Set}{module outputs to be written to the datastore}
 }}
-\source{
-PredictWalkPMT.R script.
-}
 \usage{
 PredictWalkPMTSpecifications
 }
