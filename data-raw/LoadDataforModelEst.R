@@ -310,7 +310,7 @@ Hh_df <- Hh_df %>% mutate(
   #normalize hh weights
   hhwgt=WTHHFIN * n()/sum(WTHHFIN) ) %>%
   dplyr::select(
-    HOUSEID,
+    HhId=HOUSEID,
     Age0to14,
     Age65Plus,
     AADVMT,
@@ -338,3 +338,50 @@ Hh_df <- Hh_df %>% mutate(
     Vehicles,
     Workers
   )
+
+
+#' household data frame for model estimation
+#'
+#' @format The main data frame \code{Hh_df} has 130509 rows and 33 variables:
+#' \describe{
+#'   \item{HhId}{Household ID}
+#'   \item{Age0to14}{Number of household members younger than 14}
+#'   \item{Age65Plus}{Number of household members older than 65}
+#'   \item{AADVMT}{Annual average daily VMT}
+#'   \item{BikeAvgTripDist}{Average distance of biking trips}
+#'   \item{TransitAvgTripDist}{Average distance of transit trips}
+#'   \item{WalkAvgTripDist}{Average distance of walking trips}
+#'   \item{CENSUS_R}{Census region: NE, MW, S, or W}
+#'   \item{D1B}{Gross block group population density (people/acre) on unprotected land}
+#'   \item{D1C}{Gross block group employment density (jobs/acre) on unprotected land}
+#'   \item{D2A_EPHHM}{Employment and household entropy. See https://www.epa.gov/sites/production/files/2014-03/documents/sld_userguide.pdf page 19 for more details}
+#'   \item{D2A_WRKEMP}{Household Workers per Job, by CBG}
+#'   \item{D3bpo4}{Intersection density in terms of pedestrianoriented intersections having four or more legs per square mile}
+#'   \item{D4c}{Aggregate frequency of transit service within 0.25 miles of block group boundary per hour during evening peak period}
+#'   \item{D5}{Accessibility measure from Place Types ``ACCESS = (2 * EMPTOT_2 * TOTPOP10_5) / 10000 * (EMPTOT_2 + TOTPOP10_5)``, where ``EMPTOT_2`` is employment within 2-mile radius, and ``TOTPOP10_5`` is total 2010 population within 5-mile radius. See https://github.com/gregorbj/Placetypes_USA for more details}
+#'   \item{Drivers}{Number of drivers in household}
+#'   \item{DrvAgePop}{Number of household members of driving age (>14)}
+#'   \item{FwyLaneMiPC}{UZA freeway lane miles per capita, from HPMS Table HM72}
+#'   \item{HhSize}{Household size}
+#'   \item{hhwgt}{Household weights, calculated by ORNL}
+#'   \item{LifeCycle}{Life cycle stage: "01"="Single", "02"="Couple w/o children", c("00", "03"-"08")="Couple w/ children", c("09", "10")="Empty Nester"}
+#'   \item{LogIncome}{log of household income, offset by +1 to fix issue with zero income households}
+#'   \item{metro}{Whether household's residential block group is in a metro or non-metro area, defined by whether its UZA is included in NTD and HPMS}
+#'   \item{BikeTrips}{Number of biking trips}
+#'   \item{TransitTrips}{Number of transit trips}
+#'   \item{WalkTrips}{Number of walking trips}
+#'   \item{BikePMT}{Total person miles travelled by bike}
+#'   \item{TransitPMT}{Total person miles travelled by transit}
+#'   \item{WalkPMT}{Total person miles travelled by walking}
+#'   \item{TranRevMiPC}{UZA transit revenue miles per capita}
+#'   \item{VehPerDriver}{Number of vehicles per driver}
+#'   \item{Vehicles}{Number of vehicles in household}
+#'   \item{Workers}{Number of workers in household}
+#'   }
+#'
+#' @examples
+#' str(Hh_df)
+#' head(Hh_df)
+#' summary(Hh_df)
+#'
+"Hh_df"
