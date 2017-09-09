@@ -77,7 +77,7 @@ PredictWalkTFLSpecifications <- list(
   #Specify data to saved in the data store
   Set = items(
     item(
-      NAME = "ntrips_Walk",
+      NAME = "WalkTrips",
       TABLE = "Household",
       GROUP = "Year",
       TYPE = "integer",

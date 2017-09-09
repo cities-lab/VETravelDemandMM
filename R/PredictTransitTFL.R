@@ -77,7 +77,7 @@ PredictTransitTFLSpecifications <- list(
   #Specify data to saved in the data store
   Set = items(
     item(
-      NAME = "ntrips_Transit",
+      NAME = "TransitTrips",
       TABLE = "Household",
       GROUP = "Year",
       TYPE = "integer",

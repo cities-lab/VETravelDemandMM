@@ -21,24 +21,24 @@ mm_df <- Hh_df %>%
 #' scale of the dependent variable
 fmlas_df <- tribble(
   ~metro,  ~step, ~post_func,        ~fmla,
-  "metro",    1,  function(y) y,      ~pscl::hurdle(ntrips.Walk ~ AADVMT + VehPerDriver+HhSize+LifeCycle+Age0to14+D1B+D2A_EPHHM + D3bpo4 +
+  "metro",    1,  function(y) y,      ~pscl::hurdle(WalkTrips ~ AADVMT + VehPerDriver+HhSize+LifeCycle+Age0to14+D1B+D2A_EPHHM + D3bpo4 +
                                                    D5 + FwyLaneMiPC + TranRevMiPC + LogIncome + D3bpo4 + D4c |
                                                    AADVMT + VehPerDriver+HhSize+LifeCycle+Age0to14+D1B+D2A_EPHHM + D3bpo4 +
                                                    D5 + Workers + FwyLaneMiPC + TranRevMiPC + LogIncome + D3bpo4 + D4c,
                                                  data=., weights=.$hhwgt, na.action=na.omit),
-  "metro",    2,  function(y) exp(y), ~lm(log(atd.miles.Walk) ~ AADVMT + VehPerDriver + Age0to14 +
+  "metro",    2,  function(y) exp(y), ~lm(log(WalkAvgTripDist) ~ AADVMT + VehPerDriver + Age0to14 +
                                             Age65Plus + LogIncome + LifeCycle + D2A_EPHHM +
                                             D1B + D3bpo4 + D5 + TranRevMiPC + TranRevMiPC:D4c,
-                                          data=., subset=(atd.miles.Walk > 0), weights=.$hhwgt, na.action=na.omit),
-  "non_metro",1,  function(y) y,      ~pscl::hurdle(ntrips.Walk ~  AADVMT + VehPerDriver+HhSize+LifeCycle+Age0to14+D1B+D2A_EPHHM + D3bpo4 +
+                                          data=., subset=(WalkAvgTripDist > 0), weights=.$hhwgt, na.action=na.omit),
+  "non_metro",1,  function(y) y,      ~pscl::hurdle(WalkTrips ~  AADVMT + VehPerDriver+HhSize+LifeCycle+Age0to14+D1B+D2A_EPHHM + D3bpo4 +
                                                    D5 + Workers + LogIncome |
                                                    AADVMT + VehPerDriver + HhSize + LifeCycle + Age0to14 + D1B + D2A_EPHHM + D3bpo4 +
                                                    Workers + LogIncome,
                                                  data=., weights=.$hhwgt, na.action=na.omit),
-  "non_metro",2,  function(y) exp(y), ~lm(log(atd.miles.Walk) ~ AADVMT + Age0to14 +
+  "non_metro",2,  function(y) exp(y), ~lm(log(WalkAvgTripDist) ~ AADVMT + Age0to14 +
                                              Age65Plus + LogIncome + LifeCycle + D2A_EPHHM +
                                              D1B + D5,
-                                           data=., subset=(atd.miles.Walk > 0), weights=.$hhwgt, na.action=na.omit)
+                                           data=., subset=(WalkAvgTripDist > 0), weights=.$hhwgt, na.action=na.omit)
 )
 
 #' call function to estimate models for each segment and add name for each

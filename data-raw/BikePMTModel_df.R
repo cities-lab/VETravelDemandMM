@@ -24,12 +24,12 @@ fctr_round1 <- function(x) as.factor(round(x, digits=1))
 #' scale of the dependent variable
 fmlas_df <- tribble(
   ~name, ~metro,        ~post_func,      ~fmla,
-  "hurdle", "metro",    function(y) y,   ~pscl::hurdle(int_cround(td.miles.Bike) ~ AADVMT + Workers + VehPerDriver +
+  "hurdle", "metro",    function(y) y,   ~pscl::hurdle(int_cround(BikePMT) ~ AADVMT + Workers + VehPerDriver +
                                                           LifeCycle + Age0to14 + CENSUS_R + D1B*D2A_EPHHM + FwyLaneMiPC + D4c + TranRevMiPC:D4c |
                                                             AADVMT + Workers + LifeCycle + Age0to14 + CENSUS_R +  D1B + D1B:D2A_EPHHM
                                                           + D5 + FwyLaneMiPC + TranRevMiPC,
                                                         data= ., weights=.$hhwgt, na.action=na.exclude),
-  "hurdle", "non_metro",function(y) y,   ~pscl::hurdle(int_cround(td.miles.Bike) ~ AADVMT +
+  "hurdle", "non_metro",function(y) y,   ~pscl::hurdle(int_cround(BikePMT) ~ AADVMT +
                                                               HhSize + LifeCycle + Age0to14 + Age65Plus + D1B + D1B:D2A_EPHHM + D3bpo4 |
                                                               AADVMT + Workers +
                                                               LifeCycle + Age0to14 + D1B + D2A_EPHHM + D3bpo4 + D5,
