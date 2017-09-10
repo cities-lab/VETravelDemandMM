@@ -21,12 +21,12 @@ Imports:
     splines,
     devtools,
     MASS,
-    pscl
+    pscl,
+    rmarkdown
 Suggests:
     knitr,
     NHTS2009,
-    SLD,
-    rmarkdown
+    SLD
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 Remotes:
