@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Liming Wang" />
+
+<meta name="date" content="2017-09-09" />
+
+<title>VETravelDemandMM Module Contribution Review</title>
+
+
+
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">VETravelDemandMM Module Contribution Review</h1>
+<h4 class="author"><em>Liming Wang</em></h4>
+<h4 class="date"><em>2017-09-09</em></h4>
+
+
+
+<p>This vignette documents responses to <a href="https://github.com/gregorbj/VisionEval/wiki/Contribution-Review-Criteria">VisionEval Contribution Review Criteria</a> for the VETravelDemandMM module.</p>
+<div id="contribution-review-criteria" class="section level2">
+<h2>Contribution Review Criteria</h2>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li>Does it contain all the elements that are required by the VisionEval <a href="https://github.com/gregorbj/VisionEval/blob/master/api/model_system_design.md">system specifications</a>?</li>
+</ol>
+</blockquote>
+<p>As a module for VisionEval and a standard R package, this package/module conforms to the recommendations in <a href="https://github.com/gregorbj/VisionEval/blob/master/api/model_system_design.md#8-modules">Section 8 Module</a>, in term of both required elements and the directories and files layout. The only directory included in the package but not appearing in the recommendation is <code>data-raw</code>. Here we follow Hadley Wickham’s recommendation in his <a href="http://r-pkgs.had.co.nz/data.html#data-data">R packages</a>: “Often, the data you include in <code>data/</code> is a cleaned up version of raw data you’ve gathered from elsewhere. I highly recommend taking the time to include the code used to do this in the source version of your package [… and] put this code in <code>data-raw/</code>”. The scripts in <code>data-raw</code> are code used to estimate all models and save estimation results into the <code>data</code> directory.</p>
+<blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>Why is it better, and/or different than <a href="https://github.com/gregorbj/VisionEval/tree/master/sources/modules">existing modules</a>? Does it do good science and provide documentation justifying this claim? Is it consistent with good practice in strategic modeling? How might it overlap with existing modules?</li>
+</ol>
+</blockquote>
+<p>The primary objectives of the module is to better represent multi-modal travel for in models for strategic planning and to update models with the latest and best data available. In addition to these two primary objectives, the module uses rigorous selection and benchmark of different model structures in choosing model structure and takes advantage of R infrastructure and new packages. Justification and objectives can be found in these project reports:</p>
+<ul>
+<li><a href="https://cities-lab.github.io/SPR788/Task2_Report.html">SPR 788 Project Report for Task 2 Model Design and Estimation Report</a></li>
+<li><a href="https://cities-lab.github.io/SPR788/Task3_Report.html">SPR 788 Project Report for Task 3 VETravelDemand (VisionEval Travel Demand) Implementation</a></li>
+<li><a href="https://cities-lab.github.io/SPR788/Task4_Report.html">SPR 788 Project Report for Task 4 Model Testing</a></li>
+<li><a href="https://www.dropbox.com/s/y594fz44achoqkq/jtlu_rspm.pdf?dl=0">Development of a Multi-modal Travel Demand Module for the Regional Strategic Planning Model (manuscript under review)</a></li>
+</ul>
+<blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>Is the module documentation complete? Does it include documentation of model estimation, algorithms, and instructions for using?</li>
+</ol>
+</blockquote>
+<p>There are documents of the module in various form:</p>
+<ol style="list-style-type: decimal">
+<li>manual for each of the R functions in the module;</li>
+<li>vignettes (including this document) that provide a long form document of the package;</li>
+<li>code and comments for estimation scripts</li>
+<li>Project reports and manuscripts under review, linked in the Introduction vignette</li>
+</ol>
+<blockquote>
+<ol start="4" style="list-style-type: decimal">
+<li>If the module allows the estimation of regional parameters, does it provide default data, does it have clear documentation of what the estimation data needs to be and how it is to be formatted, and does it include proper data specifications to ensure that the user’s input data are correct?</li>
+</ol>
+</blockquote>
+<p>This module provides default model parameters estimated with US nationwide data, and it is also possible to re-estimate model paramters with region-specific data. The main estimation data are drawn from two external data package (<a href="https://github.com/cities-lab/NHTS2009">NHTS2009</a> and <a href="https://github.com/cities-lab/SLD">SLD</a>, documented therein) and <code>data-raw/LoadDataforEstimation.R</code> joins data from different data sources and creates a single household data frame for estimation. <code>data-raw/LoadDataforEstimation.R</code> provides code and comments needed to replace the estimation data with region specific data.</p>
+<p>Since the model estimation does not use VisionEval specification, there is little check on data quality except for a few informational print out in the script.</p>
+<blockquote>
+<ol start="5" style="list-style-type: decimal">
+<li>Is it based on geographic definitions that are consistent with the model system definitions?</li>
+</ol>
+</blockquote>
+<p>The module uses two geographies: Bzone (block-group) and Marea (region/UZA), which are consistent with the model system definitions.</p>
+<blockquote>
+<ol start="6" style="list-style-type: decimal">
+<li>Does the module compute quickly enough and provide documentation justifying this claim?</li>
+</ol>
+</blockquote>
+<p>The tests running all 6 models in the module using Rogue Valley data take between 1 minute to 1 minutes and 30 seconds across different builds on Travis CI (See <a href="https://travis-ci.org/cities-lab/VETravelDemandMM/builds" class="uri">https://travis-ci.org/cities-lab/VETravelDemandMM/builds</a>), on average 10 - 15 seconds per model, which is almost the same as the GreenSTEP/RSPM VETravelDemand module (<a href="https://travis-ci.org/gregorbj/VisionEval/builds" class="uri">https://travis-ci.org/gregorbj/VisionEval/builds</a>).</p>
+<blockquote>
+<ol start="7" style="list-style-type: decimal">
+<li>Does it includes all source files and data? If a contributed module does not include all source data, it should include a minimal example data file for testing and so it is clear what data structure is needed to run the module. It should also include clear instructions on how to fetch the data and/or a clear explanation of why non-included data is confidential and contact information for data owners.</li>
+</ol>
+</blockquote>
+<p>Except for the confidential residential block group information for households in NHTS, all data and code are included in the package or in other open source (data) packages (NHTS2009 and SLD).</p>
+<blockquote>
+<ol start="8" style="list-style-type: decimal">
+<li>Does the module only call R code and packages that work on all operating systems? If the code includes any non-R code (e.g. FORTRAN, C++) will that code compile on all operating systems?</li>
+</ol>
+</blockquote>
+<p>The module only includes R code and should work on all operating systems.</p>
+<blockquote>
+<ol start="9" style="list-style-type: decimal">
+<li>Is it licensed with the VisionEval <a href="https//github.com/gregorbj/VisionEval/blob/master/LICENSE">license</a> that allows the code to be freely distributed and modified and includes attribution so that the ‘provenance’ of the code can be tracked?</li>
+</ol>
+</blockquote>
+<p>The package is licensed with the same Apache 2.0 license as VisionEval. A LICENSE file is added to the package directory.</p>
+<blockquote>
+<ol start="10" style="list-style-type: decimal">
+<li>Does it only interact with the computing environment by returning a properly structured list to the framework (i.e. it does not modify the global environment, does not read or write files, and only calls framework functions that are allowed)?</li>
+</ol>
+</blockquote>
+<p>Primary functions of the module are implemented in <code>R/Predict*.R</code>. The development of the package follows the VisionEval system design guide and the template module and only calls framework functions and a few internal helper functions. The module does not modify the global environment or read/write files when running as a VisionEval module.</p>
+<blockquote>
+<ol start="11" style="list-style-type: decimal">
+<li>Does it include regression tests to enable checking that consistent results will be returned when updates are made to the framework and/or R programming environment?</li>
+</ol>
+</blockquote>
+<p><code>checkModuleOutputs</code> provided by <code>testModule</code> checks outputs against specification of each model in automated tests of the package.</p>
+<blockquote>
+<ol start="12" style="list-style-type: decimal">
+<li>Does it include <a href="Automated-Testing">sufficient test coverage</a> and test data? Does it pass the <a href="https://github.com/gregorbj/VisionEval/blob/master/api/functions_summary.md#testmodule">‘testModule’</a> test which validates that it will run correctly in the model system?</li>
+</ol>
+</blockquote>
+<p>Automated tests including <code>devtools.check()</code>, installation testing, and test runs of models in the module with <code>visioneval::testModule()</code> are in place with <a href="https://travis-ci.org/cities-lab/VETravelDemandMM">Travis-CI</a>. All tests pass in the current and recent builds.</p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Liming Wang" />
+
+<meta name="date" content="2017-09-09" />
+
+<title>Introduction to VETravelDemandMM</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to VETravelDemandMM</h1>
+<h4 class="author"><em>Liming Wang</em></h4>
+<h4 class="date"><em>2017-09-09</em></h4>
+
+
+
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>The VETravelDemandMM module is a R package that implements a module for <a href="https://gregorbj.github.io/VisionEval/">the VisionEval framework</a> to simulate multi-modal travel demand for individual households including: - Annual Average Daily VMT (AADVMT) - Transit trips and PMT - Biking trips and PMT - Walking trips and PMT</p>
+<p>It supersedes the Daily VMT and non-driving trips models in RSPM/GreenSTEP (and re-implemented for VisionEval as <a href="https://github.com/gregorbj/VisionEval/tree/master/sources/modules/VETravelDemand">the VETravelDemand module</a>).</p>
+<p>The motivations of developing the new package includes better policy sensitivities for non-driving modes and taking advantage of newer and better data sources available since the implementation of the RSPM/GreenSTEP model. More specifically, the objectives of the new module include the following:</p>
+<div id="better-representation-of-multi-modal-travel" class="section level3">
+<h3>Better Representation of Multi-Modal Travel</h3>
+<p>Since the primary focus of GreenSTEP is green-house gas emission, its travel demand module has minimum representation of non-driving modes. As more non-driving travel and its associated benefits attracts more attentin from the public and policy-makers, there is need to understand the key drivers of multi-modal transportation choice and how non-driving travel reponds to policies and investment decisions and to develop models that better represent the multi-modal travel for strategic planning. This module is developed in response to this demand.</p>
+</div>
+<div id="updating-models-with-the-latest-and-best-data-available" class="section level3">
+<h3>Updating Models with the Latest and Best Data Available</h3>
+<p>The current implementation of travel demand module uses for model estimation the latest 2009 NHTS data joined with EPA’s Smart Location Database (SLD) for built environment information, the National Transit Database (NTD) for region-level transit supply, and HPMS for region-level road network. Access to the confidential block group of household’s residential location allow these nationwide datasets to be joined at a very high resolution. In addition to refresh the model estimation with the latest nationwide datasets, this new data provide a rich set of high-resolution built environment variables (the SLD includes more than a hundred block group-level built environment measures covering most of US).</p>
+<p>Since NHTS2009 have Annual VMT data for most households surveyed (more than half of them missing in NHTS2001), we took advantage of the data and model the AADVMT for household, instead of the VMT in the survey day as what the GreenSTEP used.</p>
+</div>
+<div id="rigorous-benchmark-and-selection-of-different-model-structures" class="section level3">
+<h3>Rigorous Benchmark and Selection of Different Model Structures</h3>
+<p>There are various model structures used in the research literature to model non-driving travel. We reviewed the various model structures and used theoretical vigorousness and cross-validation to benchmark and select model structures. More details of the cross-validation and model selection can be found in <a href="https://www.dropbox.com/s/y594fz44achoqkq/jtlu_rspm.pdf?dl=0">a manuscript currently under review</a>.</p>
+</div>
+<div id="taking-advantage-of-the-r-infrastructure-and-new-packages" class="section level3">
+<h3>Taking advantage of the R infrastructure and new packages</h3>
+<p>The current implementation of the module takes advantage of <a href="http://www.tidyverse.org/">the <code>tidyverse</code> suite of R packages</a>, in particular, <code>dplyr</code>, for efficiency, concision and code readability. It also uses the <code>purrr</code> package for functional programming where feasible. Comparing with RSPM/GreenSTEP, the package uses model objects and method dispatch for <code>predict</code> calls, which eliminates the need to implement different model structures in the package.</p>
+</div>
+</div>
+<div id="methods-and-model-structure" class="section level2">
+<h2>Methods and Model Structure</h2>
+<p>More discussion of the model structure can be found in <a href="https://www.dropbox.com/s/y594fz44achoqkq/jtlu_rspm.pdf?dl=0">the manuscript</a>. Here is a summary of existing and selected model structures:</p>
+<ul>
+<li>GreenSTEP Daily VMT (DVMT) Models (2-step models)
+<ol style="list-style-type: decimal">
+<li>binomial logit ZeroDVMT</li>
+<li>power-transformed linear regression of DVMT (for DVMT &gt; 0)</li>
+</ol></li>
+<li>AADVMT Model for Annual Average Daily VMT (AADVMT)
+<ul>
+<li>power-transformed linear regression of AADVMT</li>
+</ul></li>
+<li>TFL models for non-driving modes (2-step models)
+<ol style="list-style-type: decimal">
+<li>hurdle model of trip frequncies by modes (transit, walk, and bike)</li>
+<li>power-transformed linear regression of average trip length</li>
+</ol></li>
+<li>Daily person mile traveled (PMT) by (non-driving) modes models
+<ul>
+<li>hurdle models of DPMT by modes (transit, walk, and bike)</li>
+</ul></li>
+</ul>
+<p>Technical details of the model structures can be found in the estimation script for corresponding model in <code>data-raw</code>. The actual functions doing the prediction for the module in <code>R</code> is model structure agnostic - it is determined by the model objects saved in the model data frame in the <code>data</code> directory.</p>
+</div>
+<div id="usage" class="section level2">
+<h2>Usage</h2>
+<div id="installation" class="section level3">
+<h3>Installation</h3>
+<p>The package can be installed from github using the <a href="https://cran.r-project.org/web/packages/devtools/index.html"><code>devtools</code> package</a>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;gregorbj/VisionEval/sources/modules/VETravelDemandMM@develop&quot;</span>)
+<span class="co"># OR</span>
+devtools::<span class="kw">install_github</span>(<span class="st">&quot;cities-lab/VETravelDemandMM&quot;</span>)</code></pre></div>
+</div>
+<div id="model-prediction" class="section level3">
+<h3>Model Prediction</h3>
+<p>As a VisionEval module, the package provides 9 functions (in <code>R</code> directory) that predict an arrange of travel outcomes for driving and non-driving modes:</p>
+<ul>
+<li>AADVMT (Annual Average Daily VMT): <code>R/PredictAADVMT.R</code></li>
+<li>Bike PMT (Person miles travelled): <code>R/PredictBikePMT.R</code></li>
+<li>Bike TFL (Trip frequencies and length): <code>R/PredictBikeTFL.R</code></li>
+<li>Transit PMT: <code>R/PredictTransitPMT.R</code></li>
+<li>Transit TFL: <code>R/PredictTransitPMT.R</code></li>
+<li>Walk PMT: <code>R/PredictWalkPMT.R</code></li>
+<li>Walk TFL: <code>R/PredictWalkPMT.R</code></li>
+</ul>
+<p>To use modules in the package with the default parameters, a user will add modules to <code>visioneval::runModule</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#' @source \url{https://github.com/gregorbj/VisionEval/blob/9869880c26802b57447c87c8e7a317df89171498/sources/models/VERSPM/Test1/run_model.R}</span>
+
+<span class="kw">library</span>(visioneval)
+
+<span class="co">#Initialize model</span>
+<span class="co">#----------------</span>
+<span class="kw">initializeModel</span>(
+  <span class="dt">ParamDir =</span> <span class="st">&quot;defs&quot;</span>,
+  <span class="dt">RunParamFile =</span> <span class="st">&quot;run_parameters.json&quot;</span>,
+  <span class="dt">GeoFile =</span> <span class="st">&quot;geo.csv&quot;</span>,
+  <span class="dt">ModelParamFile =</span> <span class="st">&quot;model_parameters.json&quot;</span>,
+  <span class="dt">LoadDatastore =</span> <span class="ot">FALSE</span>,
+  <span class="dt">DatastoreName =</span> <span class="ot">NULL</span>,
+  <span class="dt">SaveDatastore =</span> <span class="ot">TRUE</span>
+  )  
+
+<span class="co">#Run all demo module for all years</span>
+<span class="co">#---------------------------------</span>
+for(Year in <span class="kw">getYears</span>()) {
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;CreateHouseholds&quot;</span>, 
+            <span class="dt">PackageName =</span> <span class="st">&quot;VESimHouseholds&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;PredictWorkers&quot;</span>, 
+            <span class="dt">PackageName =</span> <span class="st">&quot;VESimHouseholds&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;AssignLifeCycle&quot;</span>, 
+            <span class="dt">PackageName =</span> <span class="st">&quot;VESimHouseholds&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;PredictIncome&quot;</span>, 
+            <span class="dt">PackageName =</span> <span class="st">&quot;VESimHouseholds&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;PredictHousing&quot;</span>, 
+            <span class="dt">PackageName =</span> <span class="st">&quot;VESimHouseholds&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;LocateHouseholds&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VELandUse&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;LocateEmployment&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VELandUse&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;AssignDevTypes&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VELandUse&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;Calculate4DMeasures&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VELandUse&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;CalculateUrbanMixMeasure&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VELandUse&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;AssignTransitService&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VETransportSupply&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;AssignRoadMiles&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VETransportSupply&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;AssignVehicleOwnership&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VEVehicleOwnership&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;PredictVehicles&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VETravelDemandMM&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;PredictDrivers&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VETravelDemandMM&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)  
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;PredictAADVMT&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VETravelDemandMM&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;PredictBikePMT&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VETravelDemandMM&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;PredictWalkPMT&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VETravelDemandMM&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)
+  <span class="kw">runModule</span>(<span class="dt">ModuleName =</span> <span class="st">&quot;PredictTransitPMT&quot;</span>,
+            <span class="dt">PackageName =</span> <span class="st">&quot;VETravelDemandMM&quot;</span>,
+            <span class="dt">RunFor =</span> <span class="st">&quot;AllYears&quot;</span>,
+            <span class="dt">RunYear =</span> Year)  
+}</code></pre></div>
+</div>
+<div id="model-estimation" class="section level3">
+<h3>Model Estimation</h3>
+<p>If a user needs to replace the default model parameters and/or structures, s/he will use the scripts in <code>data-raw</code>, following these steps:</p>
+<ol style="list-style-type: decimal">
+<li><p>Prepare data</p>
+<p>Replace <code>data-raw/LoadDataforModelEst.R</code> with their own script that loads and processes their own household data frame. The variables used in the current estimation are documented in the comments of <code>data-raw/LoadDataforModelEst.R</code>. Users can add, remove, or replace most of the variables.</p></li>
+<li><p>Customize model formula</p>
+<p>Edit the corresponding model estimation script in <code>data-raw/</code> to cutomize model formula for re-estimation. For example, if a user wants to re-estimate the AADVMT model, s/he would edit <code>data-raw/AADVMTModel_df.R</code>. Before modifying the formula, replace the line in the script <code>source(&quot;data-raw/LoadDataforModelEst.R&quot;)</code> with your own script created in step 1.</p>
+<p>The estimation script uses standard R model formula to specify models. Users can change the independent variables, transformation of dependent variables, even model structure (model type) by modifying the formula.</p>
+<p>It is also possible (and recommended if the re-estimation is a specific region) to change the segmentation scheme. Most models in the package use <code>metro</code> status to segment data and estimate different models for each segment. The user can replace <code>metro</code> with any other desired variable for segmentation. If no model segmentation is needed, see <code>data-raw/DriversModel_df.R</code> and <code>data-raw/VehiclesModel_df.R</code> for examples of disabling segmentation.</p></li>
+<li><p>Re-estimate and save estimation results</p>
+<p>After modifying the model formula, save the script and source it in RStudio (recommended) or a R console. This should re-estimate the model with the new formula and save the estimation results to <code>data/</code>. It is likely to take many iterations and troubleshootings before the model formula is ideal.</p></li>
+<li><p>Modify prediction specification</p>
+<p>Once an ideal model formula is found and estimation results saved to <code>data/</code>, the user needs to edit the specifications in the <code>R/Predict*.R</code> script corresponding to the model being modified to be consistent with the model formula.</p></li>
+<li><p>Rebuild and reinstall package</p>
+<p>Finally, the package is ready for <strong>Build and Reload</strong>. Once the Build and Reload finishes successfully, the re-estimated module to ready to use with <code>visioneval::runModule</code> (see section above).</p></li>
+</ol>
+</div>
+</div>
+<div id="code-repository-and-automated-tests" class="section level2">
+<h2>Code Repository and Automated Tests</h2>
+<p>The source code of the VETravelDemandMM package is available on github: <a href="https://github.com/cities-lab/VETravelDemandMM" class="uri">https://github.com/cities-lab/VETravelDemandMM</a></p>
+<p>Automated tests of the package including:</p>
+<ul>
+<li>package check with <code>devtools::check()</code>,</li>
+<li>package build and installation with <code>R CMD INSTALL</code>, and</li>
+<li>package tests in tests/scripts/test.R (with Rogue Valley data).</li>
+</ul>
+<p>The automated tests are handled by <a href="https://travis-ci.org/">Travis-CI</a> and the current status of automated tests for the package is <a href="https://travis-ci.org/cities-lab/VETravelDemandMM"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MSIgaGVpZ2h0PSIyMCI+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4Mj0iMCIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2JiYiIgc3RvcC1vcGFjaXR5PSIuMSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1vcGFjaXR5PSIuMSIvPjwvbGluZWFyR3JhZGllbnQ+PHJlY3Qgcng9IjMiIHdpZHRoPSI4MSIgaGVpZ2h0PSIyMCIgZmlsbD0iIzU1NSIvPjxyZWN0IHJ4PSIzIiB4PSIzNyIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjIwIiBmaWxsPSIjZTA1ZDQ0Ii8+PHBhdGggZmlsbD0iI2UwNWQ0NCIgZD0iTTM3IDBoNHYyMGgtNHoiLz48cmVjdCByeD0iMyIgd2lkdGg9IjgxIiBoZWlnaHQ9IjIwIiBmaWxsPSJ1cmwoI2EpIi8+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkRlamFWdSBTYW5zLFZlcmRhbmEsR2VuZXZhLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiPjx0ZXh0IHg9IjE5LjUiIHk9IjE1IiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIj5idWlsZDwvdGV4dD48dGV4dCB4PSIxOS41IiB5PSIxNCI+YnVpbGQ8L3RleHQ+PHRleHQgeD0iNTgiIHk9IjE1IiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIj5mYWlsaW5nPC90ZXh0Pjx0ZXh0IHg9IjU4IiB5PSIxNCI+ZmFpbGluZzwvdGV4dD48L2c+PC9zdmc+" alt="Travis-CI Build Status" /></a>.</p>
+</div>
+<div id="additional-documents" class="section level2">
+<h2>Additional Documents</h2>
+<p>A report from the project that develops the module is to be released by Oregon DOT by the end of September, 2017. Parts of the report (work-in-progress) that document the literature reivew, model structure, model estimation and sensivity tests are available:</p>
+<ul>
+<li><a href="https://cities-lab.github.io/SPR788/Task2_Report.html">SPR 788 Project Report for Task 2 Model Design and Estimation Report</a></li>
+<li><a href="https://cities-lab.github.io/SPR788/Task3_Report.html">SPR 788 Project Report for Task 3 VETravelDemand (VisionEval Travel Demand) Implementation</a></li>
+<li><a href="https://cities-lab.github.io/SPR788/Task4_Report.html">SPR 788 Project Report for Task 4 Model Testing</a></li>
+</ul>
+<p>A link to the final report will be provided here once it is available.</p>
+<p>A manuscript is currently under review: - <a href="https://www.dropbox.com/s/y594fz44achoqkq/jtlu_rspm.pdf?dl=0">Development of a Multi-modal Travel Demand Module for the Regional Strategic Planning Model (manuscript under review)</a></p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
