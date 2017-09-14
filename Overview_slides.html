@@ -4,6 +4,7 @@
     <title>VETravelDemandMM Package Overview</title>
     <meta charset="utf-8">
     <meta name="author" content="Liming Wang" />
+    <meta name="date" content="2017-09-13" />
     <link href="Overview_slides_files/remark-css-0.0.1/example.css" rel="stylesheet" />
   </head>
   <body>
@@ -13,6 +14,7 @@ class: center, middle, inverse, title-slide
 # VETravelDemandMM Package Overview
 ## for VisionEval Contribution Review
 ### Liming Wang
+### September 13, 2017
 
 ---
 
@@ -47,10 +49,10 @@ class: center, middle, inverse, title-slide
 
 # Motivations and Objectives
 
-- Better representation of multi-modal travel
+- Better representation of multi-modal travel of households
 - Updating models with the latest and best data available
-    - model AADVMT instead of DVMT taking advantage of AADVMT in NHTS2009
-- Rigorous selection and benchmark of different model structures
+    - modeling Annual Average Daily VMT instead of Daily VMT by taking advantage of annual VMT in NHTS2009
+- Rigorous selection and benchmark of different model structures;
 - Taking advantage of R infrastructure and new packages
 
 ---
@@ -63,8 +65,6 @@ class: center, middle, inverse, title-slide
 - GreenSTEP/RSPM Trips by alternative modes: hurdle models
 - Annual Average Daily VMT (AADVMT) Model: two alternative structures
     - power-transformed linear regression of AADVMT
-    - hurdle model
-    - tobit model
 - Trip-frequncy-length by (non-driving) modes: 2-step models
     1. hurdle model of trip Frequncies by modes (transit, walk, and bike)
     2. power-transformed linear regression of average trip length
@@ -76,9 +76,9 @@ class: center, middle, inverse, title-slide
 # Implementation
 
 - Utilizes the `tidyverse` suite of packages for efficiency, concision and readability; uses functional programming with the `purrr` package when feasible
-- Uses the `predict` method dispatch of R model objects for prediction, simplifying code complexity
+- Uses the `predict` method dispatch of R model objects for prediction, [simplifying code complexity](https://github.com/cities-lab/VETravelDemandMM/blob/master/R/PredictAADVMT.R)
 - Conforms to the recommendations in [Section 8 Module](https://github.com/gregorbj/VisionEval/blob/master/api/model_system_design.md#8-modules), in term of both required elements and the directories and files layout
-- Closely Sticks to [VisionEval's R style guide](https://github.com/gregorbj/VisionEval/blob/master/api/Coding_Guidelines.md)
+- Closely sticks to [VisionEval's R style guide](https://github.com/gregorbj/VisionEval/blob/master/api/Coding_Guidelines.md)
 
 ---
 
@@ -86,19 +86,19 @@ class: center, middle, inverse, title-slide
 
 The module is documented in various format:
 
-1. Manual for each of the R functions in the module;
+1. Manual for each R function in the module with Roxgen2 document strings;
 1. Vignettes (including this document) that provide a long form document of the package;
-1. Code and comments for estimation scripts
-1. Project reports and manuscript under review of publication
+1. Code and comments for estimation scripts;
+1. Project reports and a manuscript under review of publication
 
 ---
 
 # Code Repository
 
 - Code as a R package available on github: https://github.com/cities-lab/VETravelDemandMM
-- Size: currently at 54.2Mb, 
+- Size: currently at &lt; 30Mb, 
    - 25.3Mb data, with the model objects for 9 models take up most of the space
-   - 28.7Mb external data, PlaceType.Rda taking up most
+   - ~2Mb external data, ~~PlaceType.Rda taking up most~~
 
 ---
 
@@ -111,13 +111,13 @@ Automated tests of the package including:
 - test of module runs with `visioneval::testModule()` in `tests/scripts/test.R` (with the Rogue Valley data).
     - `checkModuleOutputs` provided by `testModule` checks outputs against specification of each model in automated tests of the package.
 
-The automated tests are handled by [Travis-CI](https://travis-ci.org/) and the current status of automated tests for the package is [![Travis-CI Build Status](https://travis-ci.org/cities-lab/VETravelDemandMM.svg)](https://travis-ci.org/cities-lab/VETravelDemandMM).
+Automated tests are handled by [Travis-CI](https://travis-ci.org/) and the current status of automated tests for the package is [![Travis-CI Build Status](https://travis-ci.org/cities-lab/VETravelDemandMM.svg)](https://travis-ci.org/cities-lab/VETravelDemandMM).
 
 ---
 
 # Additional Documents
-- Introduction vignette
-- Responses to VisionEval Contribution Review Criteria
+- [Introduction vignette](https://cities-lab.github.io/VETravelDemandMM/Intro.html)
+- [Responses to VisionEval Contribution Review Criteria](https://cities-lab.github.io/VETravelDemandMM/Review.html)
 - [SPR 788 Project Report for Task 2 Model Design and Estimation Report](https://cities-lab.github.io/SPR788/Task2_Report.html)
 - [SPR 788 Project Report for Task 3 VETravelDemand (VisionEval Travel Demand) Implementation](https://cities-lab.github.io/SPR788/Task3_Report.html)
 - [SPR 788 Project Report for Task 4 Model Testing](https://cities-lab.github.io/SPR788/Task4_Report.html)
