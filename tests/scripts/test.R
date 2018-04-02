@@ -2,6 +2,8 @@
 library(visioneval)
 library(VETravelDemandMM)
 
+source("R/VETravelDemandMM.R")
+
 TestDir <- normalizePath(".")
 if (!endsWith(TestDir, 'tests'))
   TestDir <- file.path(TestDir, 'tests')
@@ -65,3 +67,4 @@ testModule(
   SaveDatastore = TRUE,
   DoRun = TRUE
 )
+
