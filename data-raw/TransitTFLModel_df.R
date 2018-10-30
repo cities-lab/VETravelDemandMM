@@ -1,6 +1,8 @@
 #' Estimate TransitTFL (trip frequency and length) Models for households
 #'
-library(tidyverse)
+library(dplyr)
+library(purrr)
+library(tidyr)
 library(splines)
 library(hydroGOF)
 

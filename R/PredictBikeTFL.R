@@ -19,56 +19,60 @@
 PredictBikeTFLSpecifications <- list(
   #Level of geography module is applied at
   RunBy = "Region",
-  #Specify input data
-  Inp = items(),
 
   #Specify data to be loaded from data store
   Get = items(
     item(
       NAME =
         items("HHSIZE",
-              "WRKCOUNT",
+              "Workers",
               "Age65Plus"),
       TABLE = "Household",
       GROUP = "Year",
       TYPE = "integer",
-      UNITS = "persons",
+      UNITS = "PRSN",
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = ""
     ),
     item(
-      NAME =
-        items("Income"),
+      NAME = "Income",
       TABLE = "Household",
       GROUP = "Year",
-      TYPE = "integer",
-      #UNITS = "persons",   #?
+      TYPE = "currency",
+      UNITS = "USD.2009",
+      NAVALUE = -1,
       PROHIBIT = c("NA", "< 0"),
-      ISELEMENTOF = ""
+      ISELEMENTOF = "",
+      SIZE = 0
     ),
     item(
-      NAME = items("CENSUS_R"),
-      TABLE = "Household",
+      NAME = "CENSUS_R",
+      #FILE = "marea_census_r.csv",
+      TABLE = "Marea",
       GROUP = "Year",
       TYPE = "character",
-      PROHIBIT = c("NA", "< 0"),
-      ISELEMENTOF = ""
+      UNITS = "category",
+      PROHIBIT = "",
+      ISELEMENTOF = c("NE", "S", "W", "MW"),
+      SIZE = 2
     ),
     item(
-      NAME = items("TRPOPDEN"),
+      NAME = "TRPOPDEN",
+      TABLE = "Bzone",
+      GROUP = "Year",
+      TYPE = "compound",
+      UNITS = "PRSN/SQM",
+      NAVALUE = -1,
+      PROHIBIT = c("NA", "< 0"),
+      ISELEMENTOF = "",
+      SIZE = 0
+    ),
+    item(
+      NAME = "ZeroVeh",
       TABLE = "Household",
       GROUP = "Year",
       TYPE = "integer",
-      #UNITS = "persons",   #?
-      PROHIBIT = c("NA", "< 0"),
-      ISELEMENTOF = ""
-    ),
-    item(
-      NAME = items("ZeroVeh"),
-      TABLE = "Household",
-      GROUP = "Year",
-      TYPE = "integer",
-      #UNITS = "persons",   #?
+      UNITS = "none",
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = ""
     )
@@ -85,7 +89,8 @@ PredictBikeTFLSpecifications <- list(
       NAVALUE = -1,
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = "",
-      SIZE = 0
+      SIZE = 0,
+      DESCRIPTION = "Daily biking trip frequency"
     ),
     item(
       NAME = "BikeAvgTripDist",
@@ -96,18 +101,20 @@ PredictBikeTFLSpecifications <- list(
       NAVALUE = -1,
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = "",
-      SIZE = 0
+      SIZE = 0,
+      DESCRIPTION = "Daily biking average trip length"
     ),
     item(
       NAME = "HhId",
       TABLE = "Household",
       GROUP = "Year",
       TYPE = "integer",
+      UNITS = "ID",
       NAVALUE = -1,
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = "",
       SIZE = 0,
-      DESCRIPTION = "Daily biking trip frequency and average trip length"
+      DESCRIPTION = "HouseholdID"
     )
   )
 )
@@ -170,7 +177,9 @@ devtools::use_data(PredictBikeTFLSpecifications, overwrite = TRUE)
 #' identifies the size of the longest Azone name. The second element, "HhId",
 #' identifies the size of the longest HhId.
 #' @import visioneval
-#' @import tidyverse
+#' @import dplyr
+#' @import purrr
+#' @import tidyr
 #' @import pscl
 #' @export
 PredictBikeTFL <- function(L) {

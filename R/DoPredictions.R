@@ -28,7 +28,9 @@
 #'   vector having two elements. The first element, "Azone", identifies the size
 #'   of the longest Azone name. The second element, "HhId", identifies the size
 #'   of the longest HhId.
-#' @import tidyverse
+#' @import dplyr
+#' @import purrr
+#' @import tidyr
 #' @importFrom splines ns
 #' @export
 #'
@@ -88,13 +90,17 @@ DoPredictions <- function(Model_df, Dataset_df,
 #' list column as argument.
 #' @param .x the data argument for function call `.y(.x)`
 #' @param .y the function to be used for call `.y(.x)`
-#' @return a list with result from call `.y(.x)`
+#' @param ... other arguments passing to `.y()` along with `.x`
+#' @return a list with result from call `.y(.x, ...)`
 #' @examples
-#' require(tidyverse)
-#' lcdf <- mtcars %>% nest(-cyl)
-#' lcdf$fmla <- list(~lm(mpg~wt, data=.x))
-#' lcdf <- lcdf %>% mutate(fit=map2(data, fmla, `.y(.x)`))
-#' lcdf$fit %>% map(summary)
+#'  library(tidyr)
+#'  library(dplyr)
+#'  library(purrr)
+#'  lcdf <- mtcars %>% nest(-cyl)
+#'  lcdf$fmla <- list(~lm(mpg~wt, data=.x))
+#'  lcdf <- lcdf %>% mutate(fit=map2(data, fmla, VETravelDemandMM:::`.y(.x)`))
+#'  lcdf$fit %>% map(summary)
+#'
 `.y(.x)` <- function(.x, .y, ...) {
   #at_depth(.x, 0, .y, ...)
   purrr::map(list(.x), .y, ...)[[1]]
@@ -108,9 +114,13 @@ DoPredictions <- function(Model_df, Dataset_df,
 #' @param init initial value, pass to the `.init` of `reduce()`
 #' @param ... additional argument passed to `reduce`
 #' @return a list with the combined predictions
-#' @import tidyverse
+#' @import dplyr
+#' @import purrr
+#' @import tidyr
 #' @examples
-#'  library(tidyverse)
+#'  library(dplyr)
+#'  library(purrr)
+#'  library(tidyr)
 #'  mtcars %>%
 #'    nest(-cyl) %>%
 #'    crossing(tibble(x=c(1, 2))) %>%

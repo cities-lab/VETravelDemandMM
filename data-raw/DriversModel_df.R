@@ -1,9 +1,10 @@
 #' Estimate Drivers Model for households
 #'
 library(MASS)
-library(tidyverse)
+library(dplyr)
+library(purrr)
+library(tidyr)
 library(splines)
-library(hydroGOF)
 
 source("data-raw/EstModels.R")
 if (!exists("Hh_df"))

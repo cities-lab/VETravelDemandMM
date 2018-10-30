@@ -307,18 +307,21 @@ Hh_df <- Hh_df %>% mutate(
   TRJOBPOP=ifelse(TRPOP==0, 0, TREMP/TRPOP),
   TRJOBHH=ifelse(TRHU==0, 0, TREMP/TRHU),
 
+  ZeroVeh=as.integer(Vehicles==0),
+
   #normalize hh weights
   hhwgt=WTHHFIN * n()/sum(WTHHFIN) ) %>%
   dplyr::select(
     HhId=HOUSEID,
     Age0to14,
     Age65Plus,
-    AADVMT,
+    AADVMT, DVMT,
     BikeAvgTripDist,
     TransitAvgTripDist,
     WalkAvgTripDist,
     CENSUS_R,
-    D1B, D1C, D2A_EPHHM, D2A_WRKEMP, D3bpo4, D4c, D5,
+    D1B, D1C, D2A_EPHHM, D2A_WRKEMP, D3bpo4, D4c, D5, D5ar, D5cr,
+    HTPPOPDN=TRPOPDEN, EMPTOT_5,
     Drivers,
     DrvAgePop,
     FwyLaneMiPC,
@@ -361,6 +364,7 @@ Hh_df <- Hh_df %>% mutate(
 #'   \item{D5}{Accessibility measure from Place Types ``ACCESS = (2 * EMPTOT_2 * TOTPOP10_5) / 10000 * (EMPTOT_2 + TOTPOP10_5)``, where ``EMPTOT_2`` is employment within 2-mile radius, and ``TOTPOP10_5`` is total 2010 population within 5-mile radius. See https://github.com/gregorbj/Placetypes_USA for more details}
 #'   \item{Drivers}{Number of drivers in household}
 #'   \item{DrvAgePop}{Number of household members of driving age (>14)}
+#'   \item{DVMT}{Household VMT on the survey day}
 #'   \item{FwyLaneMiPC}{UZA freeway lane miles per capita, from HPMS Table HM72}
 #'   \item{HhSize}{Household size}
 #'   \item{hhwgt}{Household weights, calculated by ORNL}

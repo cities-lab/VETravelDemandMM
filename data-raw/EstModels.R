@@ -1,5 +1,6 @@
-library(hydroGOF)
-library(tidyverse)
+library(dplyr)
+library(purrr)
+library(tidyr)
 
 source("R/DoPredictions.R")
 
@@ -91,7 +92,9 @@ EstModelWith <- function(data, fmla_df) {
 #' @param col_to_be_named name of column to be named
 #' @return data frame with named list-column(s)
 #' @examples
-#' require(tidyverse)
+#' library(tidyr)
+#' library(dplyr)
+#' library(purrr)
 #' mtcars %>% nest(-c(cyl, vs)) %>%
 #' name_list.cols(c("cyl", "vs")) %>%
 #' map(names)

@@ -4,9 +4,6 @@
 #data/PredictWalkPMT_df.rda and variables and coefficients therein to predict
 #WalkPMT.
 
-#library(visioneval)
-#library(tidyverse)
-
 #=============================================
 #SECTION 1: ESTIMATE AND SAVE MODEL PARAMETERS
 #=============================================
@@ -340,7 +337,9 @@ devtools::use_data(PredictWalkPMTSpecifications, overwrite = TRUE)
 #' identifies the size of the longest Azone name. The second element, "HhId",
 #' identifies the size of the longest HhId.
 #' @import visioneval
-#' @import tidyverse
+#' @import dplyr
+#' @import purrr
+#' @import tidyr
 #' @import pscl
 #' @export
 PredictWalkPMT <- function(L) {

@@ -138,7 +138,9 @@ rm(PredictDriversSpecifications)
 #' @return A list containing the components specified in the Set
 #' specifications for the module.
 #' @import visioneval
-#' @import tidyverse
+#' @import dplyr
+#' @import purrr
+#' @import tidyr
 #' @importFrom MASS polr
 #' @export
 PredictDrivers <- function(L) {

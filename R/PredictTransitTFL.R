@@ -170,7 +170,9 @@ devtools::use_data(PredictTransitTFLSpecifications, overwrite = TRUE)
 #' identifies the size of the longest Azone name. The second element, "HhId",
 #' identifies the size of the longest HhId.
 #' @import visioneval
-#' @import tidyverse
+#' @import dplyr
+#' @import purrr
+#' @import tidyr
 #' @import pscl
 #' @export
 PredictTransitTFL <- function(L) {

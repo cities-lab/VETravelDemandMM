@@ -4,9 +4,6 @@
 #data/BikePMTModel_df.rda and variables and coefficients therein to predict
 #BikePMT.
 
-#library(visioneval)
-#library(tidyverse)
-#library(splines)
 
 #=============================================
 #SECTION 1: ESTIMATE AND SAVE MODEL PARAMETERS
@@ -330,7 +327,9 @@ devtools::use_data(PredictBikePMTSpecifications, overwrite = TRUE)
 #' identifies the size of the longest Azone name. The second element, "HhId",
 #' identifies the size of the longest HhId.
 #' @import visioneval
-#' @import tidyverse
+#' @import dplyr
+#' @import purrr
+#' @import tidyr
 #' @import pscl
 #' @export
 PredictBikePMT <- function(L) {

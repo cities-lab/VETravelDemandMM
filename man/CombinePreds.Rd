@@ -24,7 +24,9 @@ Combine predictions from multiple models: for example combine GreenSTEP zero
 dvmt glm model and dvmt lm model As an example (a clumsy way to square mpg):
 }
 \examples{
- library(tidyverse)
+ library(dplyr)
+ library(purrr)
+ library(tidyr)
  mtcars \%>\%
    nest(-cyl) \%>\%
    crossing(tibble(x=c(1, 2))) \%>\%

@@ -1,8 +1,9 @@
 #' Estimate BikeTFL (trip frequency and length) Models for households
 #'
-library(tidyverse)
+library(dplyr)
+library(purrr)
+library(tidyr)
 library(splines)
-library(hydroGOF)
 
 source("data-raw/EstModels.R")
 if (!exists("Hh_df"))
@@ -22,7 +23,7 @@ Fmlas_df <- tribble(
   ~metro,  ~step, ~post_func,      ~fmla,
   "metro",    1,  function(y) y,   ~pscl::hurdle(BikeTrips ~ AADVMT + Age0to14 + Age65Plus + D1B + D3bpo4 + Workers + LogIncome |
                                                    log1p(AADVMT) + HhSize + LifeCycle + Age0to14 + Age65Plus + D2A_EPHHM + D3bpo4 +
-                                                   Workers + FwyLaneMiPC + TranRevMiPC + LogIncome,
+                                                   FwyLaneMiPC + TranRevMiPC + LogIncome,
                                                    data= ., weights=.$hhwgt, na.action=na.exclude),
   "metro",    2,  function(y) exp(y), ~lm(log(BikeAvgTripDist) ~ AADVMT + VehPerDriver + Age0to14 +
                                             Age65Plus + LogIncome + LifeCycle + D2A_EPHHM +

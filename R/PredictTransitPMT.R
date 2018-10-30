@@ -4,8 +4,6 @@
 #data/PredictTransitPMT_df.rda and variables and coefficients therein to predict
 #TransitPMT.
 
-#library(visioneval)
-#library(tidyverse)
 
 #=============================================
 #SECTION 1: ESTIMATE AND SAVE MODEL PARAMETERS
@@ -329,7 +327,9 @@ devtools::use_data(PredictTransitPMTSpecifications, overwrite = TRUE)
 #' identifies the size of the longest Azone name. The second element, "HhId",
 #' identifies the size of the longest HhId.
 #' @import visioneval
-#' @import tidyverse
+#' @import dplyr
+#' @import purrr
+#' @import tidyr
 #' @import pscl
 #' @export
 PredictTransitPMT <- function(L) {
