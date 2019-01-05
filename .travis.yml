@@ -9,7 +9,7 @@ warnings_are_errors: false
 
 install:
   - Rscript -e 'install.packages(c("devtools", "roxygen2", "stringr", "knitr"))'
-  - Rscript -e 'devtools::install_bioc(c("BiocInstaller", "rhdf5"))'
+  - Rscript -e 'devtools::install_bioc(c("3.6/BiocInstaller", "3.6/rhdf5"))'
 
 script:
   - Rscript -e 'devtools::install_deps(".")'
