@@ -1,10 +1,31 @@
-#================== PredictTransitTFL.R ==================
+#==========================
+#PredictTransitTFL.R
+#==========================
 #
-#This module predicts Transit trip frequency (TransitTrips) and average trip length
-#(TransitAvgTripDist) for households. It uses the model object in
-#data/TransitTFLModel_df.rda and variables and coefficients therein to predict.
+#<doc>
+#
+## PredictTransitTFL Module
+#### January 4, 2019
+#
+#This module predicts transit trip frequency and average trip length for households. It uses the model object in data/TransitTFLModel_df.rda and variables and coefficients therein to predict TransitTFL.
+#
+### Model Parameter Estimation
+#
+#See data-raw/TransitTFLModel_df.R.
+#
+### How the Module Works
+#
+#The user specifies the model in data-raw/TransitTFLModel_df.R and saves the estimation results in data/TransitTFLModel_df.rda. If no model re-estimation is desired, the estimation process can be skipped and the default model specification is then used. The module assigns TransitTFL to each household using variables including household characteristics, built environment, and transportation supply.
+#
+#</doc>
+#
 
-#library(visioneval)
+#=================================
+#Packages used in code development
+#=================================
+#Uncomment following lines during code development. Recomment when done.
+# library(visioneval)
+
 
 #=============================================
 #SECTION 1: ESTIMATE AND SAVE MODEL PARAMETERS
@@ -19,8 +40,6 @@
 PredictTransitTFLSpecifications <- list(
   #Level of geography module is applied at
   RunBy = "Region",
-  #Specify input data
-  Inp = items(),
 
   #Specify data to be loaded from data store
   Get = items(
@@ -37,38 +56,44 @@ PredictTransitTFLSpecifications <- list(
       ISELEMENTOF = ""
     ),
     item(
-      NAME =
-        items("Income"),
+      NAME = "Income",
       TABLE = "Household",
       GROUP = "Year",
-      TYPE = "integer",
-      #UNITS = "persons",   #?
+      TYPE = "currency",
+      UNITS = "USD.2009",
+      NAVALUE = -1,
       PROHIBIT = c("NA", "< 0"),
-      ISELEMENTOF = ""
+      ISELEMENTOF = "",
+      SIZE = 0
     ),
     item(
-      NAME = items("CENSUS_R"),
-      TABLE = "Household",
+      NAME = "CENSUS_R",
+      #FILE = "marea_census_r.csv",
+      TABLE = "Marea",
       GROUP = "Year",
       TYPE = "character",
-      PROHIBIT = c("NA", "< 0"),
-      ISELEMENTOF = ""
+      UNITS = "category",
+      PROHIBIT = "",
+      ISELEMENTOF = c("NE", "S", "W", "MW"),
+      SIZE = 2
     ),
     item(
-      NAME = items("TRPOPDEN"),
+      NAME = "TRPOPDEN",
+      TABLE = "Bzone",
+      GROUP = "Year",
+      TYPE = "compound",
+      UNITS = "PRSN/SQM",
+      NAVALUE = -1,
+      PROHIBIT = c("NA", "< 0"),
+      ISELEMENTOF = "",
+      SIZE = 0
+    ),
+    item(
+      NAME = "ZeroVeh",
       TABLE = "Household",
       GROUP = "Year",
       TYPE = "integer",
-      #UNITS = "persons",   #?
-      PROHIBIT = c("NA", "< 0"),
-      ISELEMENTOF = ""
-    ),
-    item(
-      NAME = items("ZeroVeh"),
-      TABLE = "Household",
-      GROUP = "Year",
-      TYPE = "integer",
-      #UNITS = "persons",   #?
+      UNITS = "none",
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = ""
     )
@@ -82,10 +107,10 @@ PredictTransitTFLSpecifications <- list(
       GROUP = "Year",
       TYPE = "integer",
       UNITS = "trips",
-      NAVALUE = -1,
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = "",
-      SIZE = 0
+      SIZE = 0,
+      DESCRIPTION = "Daily transit trip frequency"
     ),
     item(
       NAME = "TripDistance_Transit",
@@ -93,21 +118,22 @@ PredictTransitTFLSpecifications <- list(
       GROUP = "Year",
       TYPE = "integer",
       UNITS = "mile",
-      NAVALUE = -1,
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = "",
-      SIZE = 0
+      SIZE = 0,
+      DESCRIPTION = "Average daily transit trip length"
     ),
     item(
       NAME = "HhId",
       TABLE = "Household",
       GROUP = "Year",
       TYPE = "integer",
+      UNITS = "ID",
       NAVALUE = -1,
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = "",
       SIZE = 0,
-      DESCRIPTION = "Daily transit trip frequency and average trip length"
+      DESCRIPTION = "HouseholdID"
     )
   )
 )
@@ -127,7 +153,7 @@ PredictTransitTFLSpecifications <- list(
 #'  \item{Set}{module outputs to be written to the datastore}
 #' }
 "PredictTransitTFLSpecifications"
-devtools::use_data(PredictTransitTFLSpecifications, overwrite = TRUE)
+usethis::use_data(PredictTransitTFLSpecifications, overwrite = TRUE)
 
 
 #=======================================================
@@ -233,7 +259,14 @@ PredictTransitTFL <- function(L) {
   Out_ls
 }
 
+#===============================================================
+#SECTION 4: MODULE DOCUMENTATION AND AUXILLIARY DEVELOPMENT CODE
+#===============================================================
+#Run module automatic documentation
+#----------------------------------
+documentModule("PredictTransitTFL")
+
 #====================
-#SECTION 4: TEST CODE
+#SECTION 5: TEST CODE
 #====================
 # model test code is in tests/scripts/test.R

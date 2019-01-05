@@ -1,8 +1,30 @@
-#================ PredictVehicles.R ================
+#==========================
+#PredictVehicles.R
+#==========================
+#
+#<doc>
+#
+## PredictVehicles Module
+#### January 4, 2019
+#
+#This module predicts number of light-duty vehicles for households. It uses the model object in data/VehiclesModel_df.rda (ordered logit model by default) and variables and coefficients therein to predict number of vehicles.
+#
+### Model Parameter Estimation
+#
+#See data-raw/VehiclesModel_df.R.
+#
+### How the Module Works
+#
+#The user specifies the model in data-raw/VehiclesModel_df.R and saves the estimation results in data/VehiclesModel_df.rda. If no model re-estimation is desired, the estimation process can be skipped and the default model specification is then used. The module assigns vehicles to each household using household characteristics.
+#
+#</doc>
 
-#This module predicts Vehicles for households. It uses the model object in
-#data/VehiclesModel_df.rda (ordered logit model by default) and variables and
-#coefficients therein to predict Vehicles.
+#=================================
+#Packages used in code development
+#=================================
+#Uncomment following lines during code development. Recomment when done.
+# library(visioneval)
+
 
 #=============================================
 #SECTION 1: ESTIMATE AND SAVE MODEL PARAMETERS
@@ -103,7 +125,7 @@ PredictVehiclesSpecifications <- list(
 #'  \item{Set}{module outputs to be written to the datastore}
 #' }
 "PredictVehiclesSpecifications"
-devtools::use_data(PredictVehiclesSpecifications, overwrite = TRUE)
+usethis::use_data(PredictVehiclesSpecifications, overwrite = TRUE)
 rm(PredictVehiclesSpecifications)
 
 
@@ -187,8 +209,14 @@ PredictVehicles <- function(L) {
   Out_ls
 }
 
+#===============================================================
+#SECTION 4: MODULE DOCUMENTATION AND AUXILLIARY DEVELOPMENT CODE
+#===============================================================
+#Run module automatic documentation
+#----------------------------------
+documentModule("PredictVehicles")
 
 #====================
-#SECTION 4: TEST CODE
+#SECTION 5: TEST CODE
 #====================
 # model test code is in tests/scripts/test.R

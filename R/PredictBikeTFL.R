@@ -1,10 +1,30 @@
-#================== PredictBikeTFL.R ==================
+#==========================
+#PredictBikeTFL.R
+#==========================
 #
-#This module predicts bike trip frequency (BikeTrips) and average trip length
-#(BikeAvgTripDist) for households. It uses the model object in
-#data/BikeTFLModel_df.rda and variables and coefficients therein to predict.
+#<doc>
+#
+## PredictBikeTFL Module
+#### January 4, 2019
+#
+#This module predicts trip frequency (BikeTrips) and average trip length (BikeAvgTripDist) for households. It uses the model object in data/BikeTFLModel_df.rda and variables and coefficients therein to predict BikeTFL.
+#
+### Model Parameter Estimation
+#
+#See data-raw/BikeTFLModel_df.R.
+#
+### How the Module Works
+#
+#The user specifies the model in data-raw/BikeTFLModel_df.R and saves the estimation results in data/BikeTFLModel_df.rda. If no model re-estimation is desired, the estimation process can be skipped. The module assigns BikeTFL to each household using variables including household characteristics, built environment, and transportation supply.
+#
+#</doc>
+#
 
-#library(visioneval)
+#=================================
+#Packages used in code development
+#=================================
+#Uncomment following lines during code development. Recomment when done.
+# library(visioneval)
 
 #=============================================
 #SECTION 1: ESTIMATE AND SAVE MODEL PARAMETERS
@@ -134,7 +154,7 @@ PredictBikeTFLSpecifications <- list(
 #'  \item{Set}{module outputs to be written to the datastore}
 #' }
 "PredictBikeTFLSpecifications"
-devtools::use_data(PredictBikeTFLSpecifications, overwrite = TRUE)
+usethis::use_data(PredictBikeTFLSpecifications, overwrite = TRUE)
 
 
 #=======================================================
@@ -240,7 +260,14 @@ PredictBikeTFL <- function(L) {
   Out_ls
 }
 
+#===============================================================
+#SECTION 4: MODULE DOCUMENTATION AND AUXILLIARY DEVELOPMENT CODE
+#===============================================================
+#Run module automatic documentation
+#----------------------------------
+documentModule("PredictBikeTFL")
+
 #====================
-#SECTION 4: TEST CODE
+#SECTION 5: TEST CODE
 #====================
 # model test code is in tests/scripts/test.R

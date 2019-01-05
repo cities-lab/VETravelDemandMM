@@ -8,13 +8,11 @@ cache: packages
 warnings_are_errors: false
 
 install:
-  # install 1.13.6 version of devtools, because the latest 2.0.0 version doesn't work
-  - Rscript -e 'install.packages("https://cran.r-project.org/src/contrib/Archive/devtools/devtools_1.13.6.tar.gz", repos=NULL, type="source")'
-  - Rscript -e 'install.packages(c("roxygen2", "stringr", "knitr"))'
+  - Rscript -e 'install.packages(c("devtools", "roxygen2", "stringr", "knitr"))'
   - Rscript -e 'devtools::install_bioc(c("BiocInstaller", "rhdf5"))'
 
 script:
-  - Rscript -e 'devtools::install_deps(".", upgrade=FALSE)'
+  - Rscript -e 'devtools::install_deps(".")'
   - Rscript -e 'devtools::check(".")'
   - R CMD INSTALL .
   - Rscript tests/scripts/test.R

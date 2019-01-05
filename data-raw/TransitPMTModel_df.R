@@ -54,4 +54,4 @@ TransitPMTModel_df <-  Model_df %>%
   mutate(model=map(model, TrimModel))
 
 #' save Model_df to `data/`
-devtools::use_data(TransitPMTModel_df, overwrite = TRUE)
+usethis::use_data(TransitPMTModel_df, overwrite = TRUE)

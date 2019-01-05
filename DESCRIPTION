@@ -15,14 +15,15 @@ Depends:
     R (>= 3.4.0),
     visioneval
 Imports:
-    devtools (<= 1.13.6),
+    devtools,
     dplyr,
     purrr,
     tidyr,
     splines,
     MASS,
     pscl,
-    rmarkdown
+    rmarkdown,
+    usethis
 Suggests:
     knitr,
     NHTS2009,

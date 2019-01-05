@@ -1,9 +1,30 @@
-#================ PredictBikePMT.R ================
+#==========================
+#PredictBikePMT.R
+#==========================
+#
+#<doc>
+#
+## PredictBikePMT Module
+#### January 4, 2019
+#
+#This module predicts Biking PMT for households. It uses the model object in data/BikePMTModel_df.rda and variables and coefficients therein to predict BikePMT.
+#
+### Model Parameter Estimation
+#
+#See data-raw/BikePMTModel_df.R.
+#
+### How the Module Works
+#
+#The user specifies the model in data-raw/BikePMTModel_df.R and saves the estimation results in data/BikePMTModel_df.rda. If no model re-estimation is desired, the estimation process can be skipped. The module assigns BikePMT to each household using variables including household characteristics, built environment, and transportation supply.
+#
+#</doc>
 
-#This module predicts BikePMT for households. It uses the model object in
-#data/BikePMTModel_df.rda and variables and coefficients therein to predict
-#BikePMT.
 
+#=================================
+#Packages used in code development
+#=================================
+#Uncomment following lines during code development. Recomment when done.
+# library(visioneval)
 
 #=============================================
 #SECTION 1: ESTIMATE AND SAVE MODEL PARAMETERS
@@ -284,7 +305,7 @@ PredictBikePMTSpecifications <- list(
 #'  \item{Set}{module outputs to be written to the datastore}
 #' }
 "PredictBikePMTSpecifications"
-devtools::use_data(PredictBikePMTSpecifications, overwrite = TRUE)
+usethis::use_data(PredictBikePMTSpecifications, overwrite = TRUE)
 
 
 #=======================================================
@@ -389,7 +410,14 @@ PredictBikePMT <- function(L) {
   Out_ls
 }
 
+#===============================================================
+#SECTION 4: MODULE DOCUMENTATION AND AUXILLIARY DEVELOPMENT CODE
+#===============================================================
+#Run module automatic documentation
+#----------------------------------
+documentModule("PredictBikePMT")
+
 #====================
-#SECTION 4: TEST CODE
+#SECTION 5: TEST CODE
 #====================
 # model test code is in tests/scripts/test.R

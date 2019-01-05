@@ -1,8 +1,29 @@
-#================ PredictAADVMT.R ================
+#==========================
+#PredictAADVMT.R
+#==========================
+#
+#<doc>
+#
+## PredictAADVMT Module
+#### January 4, 2019
+#
+#This module predicts AADVMT for households. It uses the model object in data/AADVMTModel_df.rda and variables and coefficients therein to predict AADVMT.
+#
+### Model Parameter Estimation
+#
+#See data-raw/AADVMTModel_df.R.
+#
+### How the Module Works
+#
+#The user specifies the model in data-raw/AADVMTModel_df.R and saves the estimation results in data/AADVMTModel_df.rda. If no model re-estimation is desired, the estimation process can be skipped. The module assigns AADVMT to each household using variables including household characteristics, built environment, and transportation supply.
+#
+#</doc>
 
-#This module predicts AADVMT for households. It uses the model object in
-#data/AADVMTModel_df.rda and variables and coefficients therein to predict
-#AADVMT.
+#=================================
+#Packages used in code development
+#=================================
+#Uncomment following lines during code development. Recomment when done.
+# library(visioneval)
 
 #=============================================
 #SECTION 1: ESTIMATE AND SAVE MODEL PARAMETERS
@@ -263,7 +284,7 @@ PredictAADVMTSpecifications <- list(
 #'  \item{Set}{module outputs to be written to the datastore}
 #' }
 "PredictAADVMTSpecifications"
-devtools::use_data(PredictAADVMTSpecifications, overwrite = TRUE)
+usethis::use_data(PredictAADVMTSpecifications, overwrite = TRUE)
 
 
 #=======================================================
@@ -367,7 +388,14 @@ PredictAADVMT <- function(L) {
   Out_ls
 }
 
+#===============================================================
+#SECTION 4: MODULE DOCUMENTATION AND AUXILLIARY DEVELOPMENT CODE
+#===============================================================
+#Run module automatic documentation
+#----------------------------------
+documentModule("PredictAADVMT")
+
 #====================
-#SECTION 4: TEST CODE
+#SECTION 5: TEST CODE
 #====================
 # model test code is in tests/scripts/test.R

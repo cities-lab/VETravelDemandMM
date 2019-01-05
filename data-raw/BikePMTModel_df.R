@@ -53,4 +53,4 @@ BikePMTModel_df <-  Model_df %>%
   mutate(model=map(model, TrimModel))
 
 #' save Model_df to `data/`
-#devtools::use_data(BikePMTModel_df, overwrite = TRUE)
+#usethis::use_data(BikePMTModel_df, overwrite = TRUE)

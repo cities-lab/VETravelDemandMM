@@ -1,9 +1,29 @@
-#================ PredictTransitPMT.R ================
+#==========================
+#PredictTransitPMT.R
+#==========================
+#
+#<doc>
+#
+## PredictTransitPMT Module
+#### January 4, 2019
+#
+#This module predicts transit PMT for households. It uses the model object in data/TransitPMTModel_df.rda and variables and coefficients therein to predict TransitPMT.
+#
+### Model Parameter Estimation
+#
+#See data-raw/TransitPMTModel_df.R.
+#
+### How the Module Works
+#
+#The user specifies the model in data-raw/TransitPMTModel_df.R and saves the estimation results in data/TransitPMTModel_df.rda. If no model re-estimation is desired, the estimation process can be skipped and the default model specification is then used. The module assigns TransitPMT to each household using variables including household characteristics, built environment, and transportation supply.
+#
+#</doc>
 
-#This module predicts TransitPMT for households. It uses the model object in
-#data/PredictTransitPMT_df.rda and variables and coefficients therein to predict
-#TransitPMT.
-
+#=================================
+#Packages used in code development
+#=================================
+#Uncomment following lines during code development. Recomment when done.
+# library(visioneval)
 
 #=============================================
 #SECTION 1: ESTIMATE AND SAVE MODEL PARAMETERS
@@ -284,7 +304,7 @@ PredictTransitPMTSpecifications <- list(
 #'  \item{Set}{module outputs to be written to the datastore}
 #' }
 "PredictTransitPMTSpecifications"
-devtools::use_data(PredictTransitPMTSpecifications, overwrite = TRUE)
+usethis::use_data(PredictTransitPMTSpecifications, overwrite = TRUE)
 
 
 #=======================================================
@@ -389,7 +409,14 @@ PredictTransitPMT <- function(L) {
   Out_ls
 }
 
+#===============================================================
+#SECTION 4: MODULE DOCUMENTATION AND AUXILLIARY DEVELOPMENT CODE
+#===============================================================
+#Run module automatic documentation
+#----------------------------------
+documentModule("PredictTransitPMT")
+
 #====================
-#SECTION 4: TEST CODE
+#SECTION 5: TEST CODE
 #====================
 # model test code is in tests/scripts/test.R
