@@ -1,7 +1,7 @@
 Package: VETravelDemandMM
 Type: Package
 Title: Simulate Multi-Modal Travel Demand for Households
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: person("Liming", "Wang", role=c("aut", "cre"), email="lmwang@pdx.edu")
 Maintainer: Liming Wang <lmwang@gmail.com>
 Copyright: Portland State University
