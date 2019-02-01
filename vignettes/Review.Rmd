@@ -38,7 +38,7 @@ There are documents of the module in various form:
 
 > 4. If the module allows the estimation of regional parameters, does it provide default data, does it have clear documentation of what the estimation data needs to be and how it is to be formatted, and does it include proper data specifications to ensure that the user’s input data are correct?
 
-This module provides default model parameters estimated with US nationwide data, and it is also possible to re-estimate model paramters with region-specific data. The main estimation data are drawn from two external data package ([NHTS2009](https://github.com/cities-lab/NHTS2009) and [SLD](https://github.com/cities-lab/SLD), documented therein) and `data-raw/LoadDataforEstimation.R` joins data from different data sources and creates a single household data frame for estimation. `data-raw/LoadDataforEstimation.R` provides code and comments needed to replace the estimation data with region specific data.
+This module provides default model parameters estimated with US nationwide data, and it is also possible to re-estimate model paramters with region-specific data. The main estimation data are drawn from two external data package ([NHTS2009](https://github.com/cities-lab/NHTS2009) and [SLD](https://github.com/cities-lab/SLD), documented therein) and `data-raw/LoadDataforEstimation.R` joins data from different data sources and creates a single household data frame for estimation. Because the estimation script utilizes confidential residence block ground information in file hhctbg.csv (which contains these fields: "HOUSEID","HHSTFIPS10","HHCNTYFP10","HHCT10","HHBG10","HHZIP"), users cannot directly run `data-raw/LoadDataforEstimation.R` as it is. Any user needs to obtain a copy of hhctbg.csv should contact NHTS (https://nhts.ornl.gov/contactUs.shtml). `data-raw/LoadDataforEstimation.R` provides code and comments needed to replace the estimation data with region specific data.
 
 Since the model estimation does not use VisionEval specification, there is little check on data quality except for a few informational print out in the script.
 
@@ -52,7 +52,7 @@ The tests running all 6 models in the module using Rogue Valley data take betwee
 
 > 7. Does it includes all source files and data?  If a contributed module does not include all source data, it should include a minimal example data file for testing and so it is clear what data structure is needed to run the module.  It should also include clear instructions on how to fetch the data and/or a clear explanation of why non-included data is confidential and contact information for data owners. 
 
-Except for the confidential residential block group information for households in NHTS, all data and code are included in the package or in other open source (data) packages (NHTS2009 and SLD).
+Except for the confidential residential block group information for households in NHTS (see also response to Question 4 above), all data and code are included in the package or in other open source (data) packages (NHTS2009 and SLD).
 
 > 8. Does the module only call R code and packages that work on all operating systems? If the code includes any non-R code (e.g. FORTRAN, C++) will that code compile on all operating systems?
 

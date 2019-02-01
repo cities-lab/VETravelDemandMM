@@ -3,7 +3,10 @@
 #' sets in inst/extdata:
 #'
 #'     - confidential residence block group for households in NHTS 2009
-#'       (in hhctbg.csv)
+#'       in file hhctbg.csv, which contains these fields:
+#'       "HOUSEID","HHSTFIPS10","HHCNTYFP10","HHCT10","HHBG10","HHZIP"
+#'       Contact NHTS at https://nhts.ornl.gov/contactUs.shtml if you
+#'       need to obtain a copy of the file.
 #'     - Table HM71 and HM72 from HPMS
 #'     - UZA transit system stats from National Transit Database
 #'     - list of Urban Area and its name from the Census Beauru
