@@ -3,7 +3,7 @@
 #' sets in inst/extdata:
 #'
 #'     - confidential residence block group for households in NHTS 2009
-#'       in file hhctbg.csv, which contains these fields:
+#'       in file hhctbg.csv, which contains these fields (type for all fields is characters):
 #'       "HOUSEID","HHSTFIPS10","HHCNTYFP10","HHCT10","HHBG10","HHZIP"
 #'       Contact NHTS at https://nhts.ornl.gov/contactUs.shtml if you
 #'       need to obtain a copy of the file.

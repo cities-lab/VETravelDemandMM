@@ -1,3 +1,10 @@
+# hhctbg.csv 
+- confidential information, not included in release
+- date: 2009
+- source: NHTS (https://nhts.ornl.gov/contactUs.shtml)
+   - confidential residence block group of households in NHTS 2009
+   - Fields (type for all fields is characters): "HOUSEID","HHSTFIPS10","HHCNTYFP10","HHCT10","HHBG10","HHZIP"
+
 # hm71.xls
 - date: 2008
 - source: https://www.fhwa.dot.gov/policyinformation/statistics/2008/index.cfm#hm
@@ -6,7 +13,7 @@
      - 4.4.5.1. Length and daily vehicle-miles of travel	HM-71
 
 # hm72.xls
--date: 2008 (the next year hm72 is available is 2012)
+- date: 2008 (the next year hm72 is available is 2012)
 - source: https://www.fhwa.dot.gov/policyinformation/statistics/2008/index.cfm#hm
    - HPMS
      - 4.4.5. Urbanized area summaries
