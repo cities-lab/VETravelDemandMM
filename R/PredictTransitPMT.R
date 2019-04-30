@@ -142,6 +142,18 @@ PredictTransitPMTSpecifications <- list(
       ISELEMENTOF = ""
     ),
     item(
+      NAME = "LocType",
+      TABLE = "Household",
+      GROUP = "Year",
+      TYPE = "character",
+      UNITS = "category",
+      NAVALUE = "NA",
+      PROHIBIT = "NA",
+      ISELEMENTOF = c("Urban", "Town", "Rural"),
+      SIZE = 5,
+      DESCRIPTION = "Location type (Urban, Town, Rural) of the place where the household resides"
+    ),
+    item(
       NAME = "Bzone",
       TABLE = "Bzone",
       GROUP = "Year",
@@ -196,6 +208,17 @@ PredictTransitPMTSpecifications <- list(
       ISELEMENTOF = ""
     ),
     item(
+      NAME = "D3bmm4",
+      TABLE = "Bzone",
+      GROUP = "Year",
+      TYPE = "double",
+      UNITS = "multimodal intersections per square mile",
+      NAVALUE = -9999,
+      SIZE = 0,
+      PROHIBIT = "NA",
+      ISELEMENTOF = ""
+    ),
+    item(
       NAME = "D4c",
       TABLE = "Bzone",
       GROUP = "Year",
@@ -226,16 +249,6 @@ PredictTransitPMTSpecifications <- list(
       NAVALUE = "NA",
       PROHIBIT = "",
       ISELEMENTOF = ""
-    ),
-    item(
-      NAME = "metro",
-      TABLE = "Marea",
-      GROUP = "Year",
-      TYPE = "character",
-      UNITS = "category",
-      PROHIBIT = "",
-      ISELEMENTOF = c("metro", "non_metro"),
-      SIZE = 9
     ),
     item(
       NAME = "CENSUS_R",
@@ -367,7 +380,8 @@ PredictTransitPMT <- function(L) {
   D_df <- data.frame(L$Year[[dataset_name]])
   stopifnot("data.frame" %in% class(D_df))
   D_df <- D_df %>%
-    mutate(LogIncome=log1p(Income),
+    mutate(metro=ifelse(LocType=="Urban", "metro", "non_metro"),
+           LogIncome=log1p(Income),
            DrvAgePop=HhSize - Age0to14,
            VehPerDriver=ifelse(Drivers==0 || is.na(Drivers), 0, Vehicles/Drivers),
            LifeCycle = as.character(LifeCycle),

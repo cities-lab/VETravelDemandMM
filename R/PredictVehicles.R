@@ -86,6 +86,18 @@ PredictVehiclesSpecifications <- list(
       ISELEMENTOF = ""
     ),
     item(
+      NAME = "LocType",
+      TABLE = "Household",
+      GROUP = "Year",
+      TYPE = "character",
+      UNITS = "category",
+      NAVALUE = "NA",
+      PROHIBIT = "NA",
+      ISELEMENTOF = c("Urban", "Town", "Rural"),
+      SIZE = 5,
+      DESCRIPTION = "Location type (Urban, Town, Rural) of the place where the household resides"
+    ),
+    item(
       NAME = "Azone",
       TABLE = "Azone",
       GROUP = "Year",
@@ -166,7 +178,8 @@ PredictVehicles <- function(L) {
   stopifnot("data.frame" %in% class(D_df))
 
   D_df <- D_df %>%
-    mutate(LogIncome=log1p(Income),
+    mutate(metro=ifelse(LocType=="Urban", "metro", "non_metro"),
+           LogIncome=log1p(Income),
            DrvAgePop=HhSize - Age0to14,
            LifeCycle = as.character(LifeCycle),
            LifeCycle = ifelse(LifeCycle=="01", "Single", LifeCycle),

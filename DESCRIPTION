@@ -1,7 +1,7 @@
 Package: VETravelDemandMM
 Type: Package
 Title: Simulate Multi-Modal Travel Demand for Households
-Version: 0.3.1
+Version: 0.3.2
 Authors@R: person("Liming", "Wang", role=c("aut", "cre"), email="lmwang@pdx.edu")
 Maintainer: Liming Wang <lmwang@gmail.com>
 Copyright: Portland State University
@@ -29,7 +29,7 @@ Suggests:
     NHTS2009,
     SLD
 VignetteBuilder: knitr
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Remotes:
     VisionEval/VisionEval-Dev/sources/framework/visioneval@development,
     cities-lab/NHTS2009,

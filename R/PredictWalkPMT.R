@@ -142,6 +142,18 @@ PredictWalkPMTSpecifications <- list(
       ISELEMENTOF = ""
     ),
     item(
+      NAME = "LocType",
+      TABLE = "Household",
+      GROUP = "Year",
+      TYPE = "character",
+      UNITS = "category",
+      NAVALUE = "NA",
+      PROHIBIT = "NA",
+      ISELEMENTOF = c("Urban", "Town", "Rural"),
+      SIZE = 5,
+      DESCRIPTION = "Location type (Urban, Town, Rural) of the place where the household resides"
+    ),
+    item(
       NAME = "Bzone",
       TABLE = "Bzone",
       GROUP = "Year",
@@ -237,16 +249,6 @@ PredictWalkPMTSpecifications <- list(
       NAVALUE = "NA",
       PROHIBIT = "",
       ISELEMENTOF = ""
-    ),
-    item(
-      NAME = "metro",
-      TABLE = "Marea",
-      GROUP = "Year",
-      TYPE = "character",
-      UNITS = "category",
-      PROHIBIT = "",
-      ISELEMENTOF = c("metro", "non_metro"),
-      SIZE = 9
     ),
     item(
       NAME = "CENSUS_R",
@@ -378,7 +380,8 @@ PredictWalkPMT <- function(L) {
   D_df <- data.frame(L$Year[[dataset_name]])
   stopifnot("data.frame" %in% class(D_df))
   D_df <- D_df %>%
-    mutate(LogIncome=log1p(Income),
+    mutate(metro=ifelse(LocType=="Urban", "metro", "non_metro"),
+           LogIncome=log1p(Income),
            DrvAgePop=HhSize - Age0to14,
            VehPerDriver=ifelse(Drivers==0 || is.na(Drivers), 0, Vehicles/Drivers),
            LifeCycle = as.character(LifeCycle),
