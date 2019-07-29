@@ -32,6 +32,6 @@ Suggests:
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Remotes:
-    cities-lab/VisionEval-Dev/sources/framework/visioneval@development,
+    cities-lab/VisionEval-Dev/sources/framework/visioneval@v0.85,
     cities-lab/NHTS2009,
     cities-lab/SLD
