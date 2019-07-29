@@ -78,3 +78,36 @@ testModule(
   SaveDatastore = TRUE,
   DoRun = TRUE
 )
+
+#Test PredictBikeTFL module
+#source("R/PredictBikeTFL.R")
+testModule(
+  ModuleName = "PredictBikeTFL",
+  #ProjectDir = TestDir,
+  ParamDir = "defs",
+  LoadDatastore = TRUE,
+  SaveDatastore = TRUE,
+  DoRun = TRUE
+)
+
+#Test PredictWalkTFLT module
+#source("R/PredictWalkTFL.R")
+testModule(
+  ModuleName = "PredictWalkTFL",
+  #ProjectDir = TestDir,
+  ParamDir = "defs",
+  LoadDatastore = TRUE,
+  SaveDatastore = TRUE,
+  DoRun = TRUE
+)
+
+#Test PredictTransitTFL module
+#source("R/PredictTransitTFL.R")
+testModule(
+  ModuleName = "PredictTransitTFL",
+  #ProjectDir = TestDir,
+  ParamDir = "defs",
+  LoadDatastore = TRUE,
+  SaveDatastore = TRUE,
+  DoRun = TRUE
+)

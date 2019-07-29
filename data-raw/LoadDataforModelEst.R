@@ -371,7 +371,7 @@ Hh_df <- Hh_df %>% mutate(
 #'   \item{FwyLaneMiPC}{UZA freeway lane miles per capita, from HPMS Table HM72}
 #'   \item{HhSize}{Household size}
 #'   \item{hhwgt}{Household weights, calculated by ORNL}
-#'   \item{LifeCycle}{Life cycle stage: "01"="Single", "02"="Couple w/o children", c("00", "03"-"08")="Couple w/ children", c("09", "10")="Empty Nester"}
+#'   \item{LifeCycle}{Life cycle stage: "01"="Single", "02"="Couple w/o children", c("00", "03"-"08")="Parents w/ children", c("09", "10")="Empty Nester"}
 #'   \item{LogIncome}{log of household income, offset by +1 to fix issue with zero income households}
 #'   \item{metro}{Whether household's residential block group is in a metro or non-metro area, defined by whether its UZA is included in NTD and HPMS}
 #'   \item{BikeTrips}{Number of biking trips}

@@ -47,6 +47,7 @@ TrimModel <- function(model) {
     model$effects <- NULL
     model$fitted.values <- NULL
     model$residuals <- NULL
+    model$weights <- NULL
     model$qr$qr <- NULL
   }
 

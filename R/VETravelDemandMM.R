@@ -32,7 +32,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("AADVMTModel_df",
                                                         "model",
                                                         "post_func",
                                                         "predict",
-                                                        "step",
+                                                        "Step",
                                                         "y",
                                                         "y_name"
                                                         ))

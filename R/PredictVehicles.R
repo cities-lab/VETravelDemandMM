@@ -184,7 +184,7 @@ PredictVehicles <- function(L) {
            LifeCycle = as.character(LifeCycle),
            LifeCycle = ifelse(LifeCycle=="01", "Single", LifeCycle),
            LifeCycle = ifelse(LifeCycle %in% c("02"), "Couple w/o children", LifeCycle),
-           LifeCycle = ifelse(LifeCycle %in% c("00", "03", "04", "05", "06", "07", "08"), "Couple w/ children", LifeCycle),
+           LifeCycle = ifelse(LifeCycle %in% c("00", "03", "04", "05", "06", "07", "08"), "Parents w/ children", LifeCycle),
            LifeCycle = ifelse(LifeCycle %in% c("09", "10"), "Empty Nester", LifeCycle)
            )
 

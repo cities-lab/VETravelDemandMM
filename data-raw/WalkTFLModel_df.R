@@ -21,7 +21,7 @@ Model_df <- Hh_df %>%
 #' `post_func` column with functions de-transforming predictions to the original
 #' scale of the dependent variable
 Fmlas_df <- tribble(
-  ~metro,  ~step, ~post_func,        ~fmla,
+  ~metro,  ~Step, ~post_func,        ~fmla,
   "metro",    1,  function(y) y,      ~pscl::hurdle(WalkTrips ~ AADVMT + VehPerDriver+HhSize+LifeCycle+Age0to14+D1B+D2A_EPHHM + D3bpo4 +
                                                    D5 + FwyLaneMiPC + TranRevMiPC + LogIncome + D3bpo4 + D4c |
                                                    AADVMT + VehPerDriver+HhSize+LifeCycle+Age0to14+D1B+D2A_EPHHM + D3bpo4 +
@@ -46,7 +46,7 @@ Fmlas_df <- tribble(
 #' segment
 Model_df <- Model_df %>%
   EstModelWith(Fmlas_df) %>%
-  name_list.cols(name_cols=c("metro", "step"))
+  name_list.cols(name_cols=c("metro", "Step"))
 
 #' print model summary and goodness of fit
 Model_df$model %>% map(summary)
@@ -57,8 +57,8 @@ Model_df #%>%
 
 #' trim model object to save space
 WalkTFLModel_df <- Model_df %>%
-  dplyr::select(metro, model, post_func) %>%
+  dplyr::select(metro, Step, model, post_func) %>%
   mutate(model=map(model, TrimModel))
 
 #' save Model_df to `data/`
-#usethis::use_data(WalkTFLModel_df, overwrite = TRUE)
+usethis::use_data(WalkTFLModel_df, overwrite = TRUE)

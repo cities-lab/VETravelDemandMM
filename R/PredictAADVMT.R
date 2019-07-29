@@ -353,7 +353,7 @@ PredictAADVMT <- function(L) {
            LifeCycle = as.character(LifeCycle),
            LifeCycle = ifelse(LifeCycle=="01", "Single", LifeCycle),
            LifeCycle = ifelse(LifeCycle %in% c("02"), "Couple w/o children", LifeCycle),
-           LifeCycle = ifelse(LifeCycle %in% c("00", "03", "04", "05", "06", "07", "08"), "Couple w/ children", LifeCycle),
+           LifeCycle = ifelse(LifeCycle %in% c("00", "03", "04", "05", "06", "07", "08"), "Parents w/ children", LifeCycle),
            LifeCycle = ifelse(LifeCycle %in% c("09", "10"), "Empty Nester", LifeCycle)
     ) %>%
     left_join(Bzone_df, by="Bzone") %>%
@@ -368,7 +368,7 @@ PredictAADVMT <- function(L) {
   Model_df <- AADVMTModel_df
 
   # find cols used for segmenting households ("metro" by default)
-  SegmentCol_vc <- setdiff(names(Model_df), c("model", "step", "post_func", "bias_adj"))
+  SegmentCol_vc <- setdiff(names(Model_df), c("model", "Step", "post_func", "bias_adj"))
 
   # segmenting columns must appear in D_df
   stopifnot(all(SegmentCol_vc %in% names(D_df)))

@@ -9,7 +9,7 @@ DoPredictions(Model_df, Dataset_df, dataset_name, id_name, y_name,
 }
 \arguments{
 \item{Model_df}{A list-column data_frame containing a 'model' list-column,
-column(s) used for segmenting data, and, optionally, a 'step' column and a
+column(s) used for segmenting data, and, optionally, a 'Step' column and a
 'post_func' for multi-step models and post-processing function for
 predictions.}
 
@@ -24,7 +24,7 @@ model objects.}
 \item{y_name}{A character string for name of the outcome variable}
 
 \item{SegmentCol_vc}{A vector for columns used for segmentation; if NULL
-assuming columns other than c("model", "step", "post_func", "bias.adj") in
+assuming columns other than c("model", "Step", "post_func", "bias.adj") in
 Model_df is used for segmentation}
 
 \item{combine_preds}{A logical flag indicating whether to combine predictions

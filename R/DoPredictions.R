@@ -7,7 +7,7 @@
 #' model objects saved in list-column data_frame Model_df.
 #'
 #' @param Model_df A list-column data_frame containing a 'model' list-column,
-#'   column(s) used for segmenting data, and, optionally, a 'step' column and a
+#'   column(s) used for segmenting data, and, optionally, a 'Step' column and a
 #'   'post_func' for multi-step models and post-processing function for
 #'   predictions.
 #' @param Dataset_df A data frame providing independent variables and
@@ -17,7 +17,7 @@
 #' @param id_name A character string for the id column of Dataset_df
 #' @param y_name A character string for name of the outcome variable
 #' @param SegmentCol_vc A vector for columns used for segmentation; if NULL
-#'   assuming columns other than c("model", "step", "post_func", "bias.adj") in
+#'   assuming columns other than c("model", "Step", "post_func", "bias.adj") in
 #'   Model_df is used for segmentation
 #' @param combine_preds A logical flag indicating whether to combine predictions
 #'   for multi-step models (default FALSE)
@@ -31,6 +31,7 @@
 #' @import dplyr
 #' @import purrr
 #' @import tidyr
+#' @importFrom rlang syms
 #' @importFrom splines ns
 #' @export
 #'
@@ -38,13 +39,13 @@ DoPredictions <- function(Model_df, Dataset_df,
                            dataset_name, id_name, y_name, SegmentCol_vc=NULL, combine_preds=FALSE) {
   #create household list-column data_frame and join with Model_df
   if (is.null(SegmentCol_vc)) {
-    SegmentCol_vc <- setdiff(names(Model_df), c("model", "step", "post_func", "bias_adj"))
+    SegmentCol_vc <- setdiff(names(Model_df), c("model", "Step", "post_func", "bias_adj"))
     if (length(SegmentCol_vc)==0) SegmentCol_vc <- NULL
   }
-
+  SegmentCol_syms <- syms(SegmentCol_vc)
   if (!is.null(SegmentCol_vc)) {
     Dataset_lcdf <- Dataset_df %>%
-      group_by_(SegmentCol_vc) %>%
+      group_by(!!!SegmentCol_syms) %>%
       nest() %>%
       left_join(Model_df, by=SegmentCol_vc)
   } else { # if there is no segmentation in model(s)
@@ -71,10 +72,10 @@ DoPredictions <- function(Model_df, Dataset_df,
   # zero VMT model + 2. non-zero VMT regression model). For now,
   # combine_preds multiplies predictions from each step, it's possible to pass
   # other functions to it
-  if (combine_preds & "step" %in% names(Preds_lcdf)) {
+  if (combine_preds & "Step" %in% names(Preds_lcdf)) {
     Preds_lcdf <- Preds_lcdf %>%
-      arrange(step) %>%
-      group_by_(SegmentCol_vc) %>%
+      arrange(Step) %>%
+      group_by(!!!SegmentCol_syms) %>%
       summarize(data=list(first(data)),
                 y=CombinePreds(y)) %>%
       ungroup()

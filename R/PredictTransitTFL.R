@@ -44,16 +44,58 @@ PredictTransitTFLSpecifications <- list(
   #Specify data to be loaded from data store
   Get = items(
     item(
+      NAME = "HhId",
+      TABLE = "Household",
+      GROUP = "Year",
+      TYPE = "character",
+      UNITS = "ID",
+      PROHIBIT = "",
+      ISELEMENTOF = ""
+    ),
+    item(
+      NAME ="AADVMT",
+      TABLE = "Household",
+      GROUP = "Year",
+      TYPE = "distance",
+      UNITS = "MI",
+      PROHIBIT = c("NA", "< 0"),
+      ISELEMENTOF = ""
+    ),
+    item(
       NAME =
-        items("HHSIZE",
-              "WRKCOUNT",
+        items("HhSize",
+              "Workers",
+              "Drivers",
+              "Age0to14",
               "Age65Plus"),
       TABLE = "Household",
       GROUP = "Year",
-      TYPE = "integer",
-      UNITS = "persons",
+      TYPE = "people",
+      UNITS = "PRSN",
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = ""
+    ),
+    item(
+      NAME = "LifeCycle",
+      TABLE = "Household",
+      GROUP = "Year",
+      TYPE = "character",
+      UNITS = "category",
+      NAVALUE = -1,
+      PROHIBIT = "",
+      ISELEMENTOF = c("00", "01", "02", "03", "04", "09", "10"),
+      SIZE = 2
+    ),
+    item(
+      NAME = "Vehicles",
+      TABLE = "Household",
+      GROUP = "Year",
+      TYPE = "vehicles",
+      UNITS = "VEH",
+      NAVALUE = -1,
+      PROHIBIT = c("NA", "< 0"),
+      ISELEMENTOF = "",
+      SIZE = 0
     ),
     item(
       NAME = "Income",
@@ -67,6 +109,114 @@ PredictTransitTFLSpecifications <- list(
       SIZE = 0
     ),
     item(
+      NAME = "LocType",
+      TABLE = "Household",
+      GROUP = "Year",
+      TYPE = "character",
+      UNITS = "category",
+      NAVALUE = "NA",
+      PROHIBIT = "NA",
+      ISELEMENTOF = c("Urban", "Town", "Rural"),
+      SIZE = 5,
+      DESCRIPTION = "Location type (Urban, Town, Rural) of the place where the household resides"
+    ),
+    item(
+      NAME = "Bzone",
+      TABLE = "Household",
+      GROUP = "Year",
+      TYPE = "character",
+      UNITS = "none",
+      NAVALUE = "NA",
+      PROHIBIT = "",
+      ISELEMENTOF = ""
+    ),
+    item(
+      NAME = "Bzone",
+      TABLE = "Bzone",
+      GROUP = "Year",
+      TYPE = "character",
+      UNITS = "none",
+      NAVALUE = "NA",
+      PROHIBIT = "",
+      ISELEMENTOF = ""
+    ),
+    item(
+      NAME = "D1B",
+      TABLE = "Bzone",
+      GROUP = "Year",
+      TYPE = "compound",
+      UNITS = "PRSN/SQM",
+      NAVALUE = -1,
+      PROHIBIT = c("NA", "< 0"),
+      ISELEMENTOF = "",
+      SIZE = 0
+    ),
+    item(
+      NAME = "D2A_WRKEMP",
+      TABLE = "Bzone",
+      GROUP = "Year",
+      TYPE = "compound",
+      UNITS = "PRSN/JOB",
+      NAVALUE = -1,
+      PROHIBIT = c("NA", "< 0"),
+      ISELEMENTOF = "",
+      SIZE = 0
+    ),
+    item(
+      NAME = "D2A_EPHHM",
+      TABLE = "Bzone",
+      GROUP = "Year",
+      TYPE = "double",
+      UNITS = "employment & household entropy",
+      NAVALUE = -1,
+      PROHIBIT = c("NA", "< 0"),
+      ISELEMENTOF = "",
+      SIZE = 0
+    ),
+    item(
+      NAME = "D3bpo4",
+      TABLE = "Bzone",
+      GROUP = "Year",
+      TYPE = "double",
+      UNITS = "pedestrian-oriented intersections per square mile",
+      NAVALUE = -9999,
+      SIZE = 0,
+      PROHIBIT = "NA",
+      ISELEMENTOF = ""
+    ),
+    item(
+      NAME = "D4c",
+      TABLE = "Bzone",
+      GROUP = "Year",
+      TYPE = "double",
+      UNITS = "aggregate peak period transit service",
+      NAVALUE = -1,
+      SIZE = 0,
+      PROHIBIT = c("NA", "< 0"),
+      ISELEMENTOF = ""
+    ),
+    item(
+      NAME = "D5",
+      TABLE = "Bzone",
+      GROUP = "Year",
+      TYPE = "double",
+      UNITS = "NA",
+      NAVALUE = -1,
+      SIZE = 0,
+      PROHIBIT = c("NA", "< 0"),
+      ISELEMENTOF = ""
+    ),
+    item(
+      NAME = "Marea",
+      TABLE = "Marea",
+      GROUP = "Year",
+      TYPE = "character",
+      UNITS = "none",
+      NAVALUE = "NA",
+      PROHIBIT = "",
+      ISELEMENTOF = ""
+    ),
+    item(
       NAME = "CENSUS_R",
       #FILE = "marea_census_r.csv",
       TABLE = "Marea",
@@ -78,24 +228,26 @@ PredictTransitTFLSpecifications <- list(
       SIZE = 2
     ),
     item(
-      NAME = "TRPOPDEN",
-      TABLE = "Bzone",
+      NAME = "FwyLaneMiPC",
+      TABLE = "Marea",
       GROUP = "Year",
       TYPE = "compound",
-      UNITS = "PRSN/SQM",
+      UNITS = "MI/PRSN",
       NAVALUE = -1,
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = "",
       SIZE = 0
     ),
     item(
-      NAME = "ZeroVeh",
-      TABLE = "Household",
+      NAME = "TranRevMiPC",
+      TABLE = "Marea",
       GROUP = "Year",
-      TYPE = "integer",
-      UNITS = "none",
+      TYPE = "compound",
+      UNITS = "MI/PRSN",
+      NAVALUE = -1,
       PROHIBIT = c("NA", "< 0"),
-      ISELEMENTOF = ""
+      ISELEMENTOF = "",
+      SIZE = 0
     )
   ),
 
@@ -105,47 +257,25 @@ PredictTransitTFLSpecifications <- list(
       NAME = "TransitTrips",
       TABLE = "Household",
       GROUP = "Year",
-      TYPE = "integer",
-      UNITS = "trips",
+      TYPE = "compound",
+      UNITS = "TRIP/DAY",
+      NAVALUE = -1,
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = "",
       SIZE = 0,
       DESCRIPTION = "Daily transit trip frequency"
     ),
     item(
-      NAME = "TripDistance_Transit",
+      NAME = "TransitAvgTripDist",
       TABLE = "Household",
       GROUP = "Year",
-      TYPE = "integer",
-      UNITS = "mile",
-      PROHIBIT = c("NA", "< 0"),
-      ISELEMENTOF = "",
-      SIZE = 0,
-      DESCRIPTION = "Average daily transit trip length"
-    ),
-    item(
-      NAME = "HhId",
-      TABLE = "Household",
-      GROUP = "Year",
-      TYPE = "integer",
-      UNITS = "ID",
+      TYPE = "distance",
+      UNITS = "MI",
       NAVALUE = -1,
       PROHIBIT = c("NA", "< 0"),
       ISELEMENTOF = "",
       SIZE = 0,
-      DESCRIPTION = "HouseholdID"
-    ),
-    item(
-      NAME = "LocType",
-      TABLE = "Household",
-      GROUP = "Year",
-      TYPE = "character",
-      UNITS = "category",
-      NAVALUE = "NA",
-      PROHIBIT = "NA",
-      ISELEMENTOF = c("Urban", "Town", "Rural"),
-      SIZE = 5,
-      DESCRIPTION = "Location type (Urban, Town, Rural) of the place where the household resides"
+      DESCRIPTION = "Daily transit average trip length"
     )
   )
 )
@@ -234,7 +364,7 @@ PredictTransitTFL <- function(L) {
            LifeCycle = as.character(LifeCycle),
            LifeCycle = ifelse(LifeCycle=="01", "Single", LifeCycle),
            LifeCycle = ifelse(LifeCycle %in% c("02"), "Couple w/o children", LifeCycle),
-           LifeCycle = ifelse(LifeCycle %in% c("00", "03", "04", "05", "06", "07", "08"), "Couple w/ children", LifeCycle),
+           LifeCycle = ifelse(LifeCycle %in% c("00", "03", "04", "05", "06", "07", "08"), "Parents w/ children", LifeCycle),
            LifeCycle = ifelse(LifeCycle %in% c("09", "10"), "Empty Nester", LifeCycle)
     ) %>%
     left_join(Bzone_df, by="Bzone") %>%
@@ -247,7 +377,7 @@ PredictTransitTFL <- function(L) {
   Model_df <- TransitTFLModel_df
 
   # find cols used for segmenting households ("metro" by default)
-  SegmentCol_vc <- setdiff(names(Model_df), c("model", "step", "post_func", "bias_adj"))
+  SegmentCol_vc <- setdiff(names(Model_df), c("model", "Step", "post_func", "bias_adj"))
 
   # segmenting columns must appear in D_df
   stopifnot(all(SegmentCol_vc %in% names(D_df)))
@@ -265,8 +395,8 @@ PredictTransitTFL <- function(L) {
       TransitTrips = -1,
       TransitAvgTripDist = -1
     )
-  Out_ls$Year$Household$TransitTrips       <- Preds %>% filter(step==1) %>% pull(y)
-  Out_ls$Year$Household$TransitAvgTripDist <- Preds %>% filter(step==2) %>% pull(y)
+  Out_ls$Year$Household$TransitTrips       <- Preds %>% filter(Step==1) %>% pull(y)
+  Out_ls$Year$Household$TransitAvgTripDist <- Preds %>% filter(Step==2) %>% pull(y)
 
   #Return the list
   Out_ls

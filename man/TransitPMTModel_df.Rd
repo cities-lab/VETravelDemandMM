@@ -3,7 +3,7 @@
 \docType{data}
 \name{TransitPMTModel_df}
 \alias{TransitPMTModel_df}
-\title{list-column data frame (tibble) with estimated model objects for household Walking PMT model}
+\title{list-column data frame (tibble) with estimated model objects for household Transit PMT model}
 \format{The main data frame \code{TransitPMTModel} has 2 rows and 3 variables:
 \describe{
   \item{metro}{metro or non-metro segment of the Transit PMT model}
